@@ -1,0 +1,1 @@
+#z::Run "https://www.autohotkey.com"
