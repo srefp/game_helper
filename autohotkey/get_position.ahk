@@ -9,8 +9,9 @@ RButton::
 }
 
 ; 前进
-Right::
+XButton1::
 {
-    MouseGetPos &xpos, &ypos
-    ToolTip "" . xpos . ", " . ypos
+    SendInput "{LShift down}"
+    Sleep 80
+    SendInput "{LShift up}"
 }

@@ -21,5 +21,5 @@ XButton2::
     DllCall("SetCursorPos", "int", 1678 + Random(-2, 2), "int", 1005 + Random(-2, 2))
     Send "{Click}"
     Sleep(80)
-    MouseMove xpos, ypos
+    DllCall("SetCursorPos", "int", xpos, "int", ypos)
 }
