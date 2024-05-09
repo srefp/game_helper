@@ -1,162 +1,146 @@
+#Include constants.ahk
+
 InstallKeybdHook
 InstallMouseHook
 
-SetDefaultMouseSpeed 10
-
-; 路线开始的点位
-global routeIndex := 11
-
-; 常量
-; 鼠标类型
-global MOVE_CLICK := 1 ; 移动并点击
-global MOVE_CLICK_BOOK := 2 ; 移动并点击
-global MOVE := 3 ; 移动
-global DRAG := 4 ; 拖动
-global KEYBOARD := 5 ; 按键
-global WHEEL_DOWN := 6 ; 滚轮
-global SHIFT := 7 ; 滚轮
-global MOVE_CLICK_LONG := 8 ; 长按
-
-; 延时
-global BUTTON_SLEEP := 120 ; 点击按钮的延时
-global DRAG_DELAY := 100 ; 拖动延时
-global BUTTON_SLEEP_BOOK := 600 ; 追踪延迟
-
-BOOK_CLICK1 := {type: KEYBOARD, data: "{F1}"} ; 开书
-BOOK_CLICK2 := {type: MOVE_CLICK, data: {x: 294, y: 545}} ; 讨伐
-BOOK_CLICK3 := {type: MOVE_CLICK, data: {x: 493, y: 199}} ; 首领按钮
-BOOK_CLICK4 := {type: MOVE_CLICK, data: {x: 511, y: 431}} ; 首领按钮
-BOOK_CLICK5 := {type: MOVE_CLICK_LONG, data: {x: 955, y: 292}} ; 首领按钮
-TRACK_CLICK_CANCEL := {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
-TRACK_CLICK := {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
-
-DRAGON_MONSTER := {type: MOVE_CLICK, data: {x: 497, y: 805}} ; 渊下宫水龙蜥
-SNAKE_MONSTER := {type: MOVE_CLICK, data: {x: 673, y: 805}} ; 巨蛇
-WATER_MAN_MONSTER := {type: MOVE_CLICK, data: {x: 681, y: 743}} ; 水型幻人
-
+MASTER_CLICK1 := {type: MOVE_CLICK, data: {x: 493, y: 199}} ; 首领按钮
+MASTER_CLICK2 := {type: MOVE_CLICK, data: {x: 514, y: 425}} ; 首领按钮
 OPEN_MAP := {type: SHIFT,  data: ""}
 CONFIRM := {type: MOVE_CLICK, data: {x: 1678, y: 1005}}
 MAP_SELECTION := {type: MOVE_CLICK, data: {x: 1760, y: 1017}}
 
 ; 路线
-global routes := [
+global marksArr := [
     [
-        {type: WHEEL_DOWN, data: 20},
-        DRAGON_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
-        {type: DRAG, data: {x: -400, y: 0}},
-        {type: MOVE_CLICK, data: {x: 36, y: 903}},
+        "渊下宫1",
+        OPEN_MAP, ; 开地图
+        MAP_SELECTION, ; 选择地图
+        {type: MOVE_CLICK, data: {x: 1429, y: 512}}, ; 选渊下宫
+        {type: DRAG, data: {x: -450, y: 0}},
+        {type: MOVE_CLICK, data: {x: 152, y: 903}},
         CONFIRM,
     ],
     [
+        "渊下宫2",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 294, y: 545}},
+        MASTER_CLICK1,
+        MASTER_CLICK2,
+        {type: MOVE, data: {x: 752, y: 502}},
+        {type: WHEEL_DOWN, data: -20},
         {type: WHEEL_DOWN, data: 20},
-        DRAGON_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        {type: MOVE_CLICK, data: {x: 497, y: 805}}, ; 点击头像
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 563, y: 202}}, ; 点击传送锚点
         CONFIRM,
     ],
     [
-        {type: WHEEL_DOWN, data: 20},
-        DRAGON_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "渊下宫3",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1536, y: 241}}, ; 点击传送锚点
         CONFIRM,
     ],
     [
-        {type: WHEEL_DOWN, data: 20},
-        DRAGON_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "渊下宫4",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1500, y: 571}}, ; 点击传送锚点
         CONFIRM,
     ],
     [
-        {type: WHEEL_DOWN, data: 20},
-        DRAGON_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "渊下宫5",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: DRAG, data: {x: 0, y: 100}},
         {type: MOVE_CLICK, data: {x: 792, y: 1056}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 6 -> 层岩
     [
-        {type: WHEEL_DOWN, data: 20},
-        SNAKE_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
-        {type: MOVE_CLICK, data: {x: 1053, y: 264}}, ; 点击传送锚点
+        "层岩1",
+        OPEN_MAP, ; 开地图
+        MAP_SELECTION, ; 选择地图
+        {type: MOVE_CLICK_BOOK, data: {x: 1750, y: 508}}, ; 选层岩
+        {type: MOVE_CLICK, data: {x: 960, y: 539}}, ; 选锚点
         CONFIRM,
     ],
     ; 7
     [
-        {type: WHEEL_DOWN, data: 20},
-        SNAKE_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "层岩2",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 688, y: 559}}, ; 选择巨蛇
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1065, y: 498}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 8
     [
-        {type: WHEEL_DOWN, data: 20},
-        SNAKE_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "层岩3",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 688, y: 559}}, ; 选择巨蛇
+        {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1065, y: 498}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 9
     [
-        {type: WHEEL_DOWN, data: 20},
-        SNAKE_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "层岩4",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 688, y: 559}}, ; 选择巨蛇
+        {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1140, y: 899}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 10
     [
-        {type: WHEEL_DOWN, data: 20},
-        SNAKE_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "层岩5",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: MOVE_CLICK, data: {x: 688, y: 559}}, ; 选择巨蛇
+        {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: DRAG, data: {x: 400, y: 0}},
         {type: MOVE_CLICK, data: {x: 1216, y: 1048}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 11 -> 枫丹
     [
-        {type: WHEEL_DOWN, data: 60},
-        WATER_MAN_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
-        {type: MOVE_CLICK, data: {x: 1044, y: 807}}, ; 选锚点
+        "枫丹1",
+        OPEN_MAP, ; 开地图
+        MAP_SELECTION, ; 选择地图
+        {type: MOVE_CLICK_BOOK, data: {x: 1430, y: 395}}, ; 选枫丹
+        {type: DRAG, data: {x: -400, y: 200}},
+        {type: MOVE_CLICK, data: {x: 706, y: 987}}, ; 选锚点
         CONFIRM,
     ],
     ; 12
     [
-        {type: WHEEL_DOWN, data: 60},
-        WATER_MAN_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "枫丹2",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: WHEEL_DOWN, data: 30},
+        {type: MOVE_CLICK, data: {x: 672, y: 669}}, ; 选择巨蛇
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1041, y: 806}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 13
     [
-        {type: WHEEL_DOWN, data: 60},
-        WATER_MAN_MONSTER,
-        TRACK_CLICK_CANCEL,
-        TRACK_CLICK,
+        "枫丹3",
+        {type: KEYBOARD, data: "{F1}"},
+        {type: WHEEL_DOWN, data: 30},
+        {type: MOVE_CLICK, data: {x: 672, y: 669}}, ; 选择水型幻人
+        {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
         {type: MOVE_CLICK, data: {x: 1147, y: 955}}, ; 点击传送锚点
         CONFIRM,
     ],
     ; 14
     [
+        "枫丹4",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 686, y: 393}}, ; 选择螃蟹
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -165,6 +149,7 @@ global routes := [
     ],
     ; 15
     [
+        "枫丹5",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 868, y: 716}}, ; 选择甘雨二大爷
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -173,6 +158,7 @@ global routes := [
     ],
     ; 16
     [
+        "枫丹6",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -181,6 +167,7 @@ global routes := [
     ],
     ; 17
     [
+        "枫丹7",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -189,6 +176,7 @@ global routes := [
     ],
     ; 18
     [
+        "枫丹8",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -197,6 +185,7 @@ global routes := [
     ],
     ; 19
     [
+        "枫丹9",
         {type: KEYBOARD, data: "{F1}"},
         {type: WHEEL_DOWN, data: -25},
         {type: MOVE_CLICK, data: {x: 498, y: 515}}, ; 选择鸡哥
@@ -206,6 +195,7 @@ global routes := [
     ],
     ; 20
     [
+        "枫丹10",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -215,6 +205,7 @@ global routes := [
     ],
     ; 21
     [
+        "枫丹11",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -223,6 +214,7 @@ global routes := [
     ],
     ; 22
     [
+        "枫丹12",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -231,6 +223,7 @@ global routes := [
     ],
     ; 23 神像
     [
+        "枫丹13",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -239,6 +232,7 @@ global routes := [
     ],
     ; 24
     [
+        "枫丹14",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 498, y: 724}}, ; 选择无相草
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -247,6 +241,7 @@ global routes := [
     ],
     ; 25
     [
+        "枫丹15",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 678, y: 390}}, ; 选择机械龙兽
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -255,6 +250,7 @@ global routes := [
     ],
     ; 26
     [
+        "枫丹6",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -263,6 +259,7 @@ global routes := [
     ],
     ; 27
     [
+        "枫丹17",
         {type: KEYBOARD, data: "{F1}"},
         {type: MOVE_CLICK, data: {x: 1460, y: 839}}, ; 取消追踪
         {type: MOVE_CLICK_BOOK, data: {x: 1460, y: 839}}, ; 确认追踪
@@ -272,67 +269,10 @@ global routes := [
 
 ]
 
-Right::
-{
-    global routeIndex, routes
-    SendInput routeIndex
-    if (routeIndex <= routes.Length) {
-        executeStep routes[routeIndex]
-    }
-    routeIndex++
-}
+marks := Map()
+global nameIndex := 1
 
-; 执行每一步
-executeStep(steps) {
-    steps.InsertAt(1, BOOK_CLICK1, BOOK_CLICK2, BOOK_CLICK3, BOOK_CLICK4, BOOK_CLICK5)
-    For _, step in steps {
-        type := step.type
-        data := step.data
-        if (type = MOVE_CLICK) {
-            DllCall("SetCursorPos", "int", data.x, "int", data.y)
-            Send "{Click}"
-            Sleep BUTTON_SLEEP
-        } else if (type = DRAG) {
-            MouseGetPos &xpos, &ypos
-            SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos - data.x . " " . ypos - data.y . " Up}"
-            Sleep BUTTON_SLEEP
-        } else if (type = KEYBOARD) {
-            Send data
-            Sleep 1000
-        } else if (type = MOVE) {
-            DllCall("SetCursorPos", "int", data.x, "int", data.y)
-        } else if (type = WHEEL_DOWN) {
-            if (data > 0) {
-                LOOP data {
-                    Send "{WheelDown}"
-                }
-            } else {
-                LOOP -data {
-                    Send "{WheelUp}"
-                }
-            }
-            Sleep BUTTON_SLEEP
-        } else if (type = MOVE_CLICK_BOOK) {
-            DllCall("SetCursorPos", "int", data.x, "int", data.y)
-            Send "{Click}"
-            Sleep BUTTON_SLEEP_BOOK
-        } else if (type = SHIFT) {
-            SendInput "{LShift down}"
-            Sleep 80
-            SendInput "{LShift up}"
-            Sleep BUTTON_SLEEP_BOOK
-        } else if (type = MOVE_CLICK_LONG) {
-            DllCall("SetCursorPos", "int", data.x, "int", data.y)
-            SendInput "{LButton down}"
-            Sleep 60
-            SendInput "{LButton up}"
-        }
-    }
-}
-
-; 前进
-XButton2::
-{
-    MouseGetPos &xpos, &ypos
-    ToolTip "" . xpos . ", " . ypos
+for _, markItem in marksArr {
+    markName := markItem.RemoveAt(nameIndex)
+    marks[markName] := markItem
 }
