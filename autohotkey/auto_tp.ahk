@@ -21,7 +21,6 @@ global MOVE_CLICK_LONG := 8 ; 长按
 global BUTTON_SLEEP := 120 ; 点击按钮的延时
 global DRAG_DELAY := 100 ; 拖动延时
 global BUTTON_SLEEP_BOOK := 600 ; 追踪延迟
-
 BOOK_CLICK1 := {type: KEYBOARD, data: "{F1}"} ; 开书
 BOOK_CLICK2 := {type: MOVE_CLICK, data: {x: 294, y: 545}} ; 讨伐
 BOOK_CLICK3 := {type: MOVE_CLICK, data: {x: 493, y: 199}} ; 首领按钮
