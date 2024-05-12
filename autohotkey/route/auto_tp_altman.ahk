@@ -1,9 +1,8 @@
-; 魔像路线
-#IfWinActive ahk_class UnityWndClass ;;限定以下程序只运行在unity类游戏里面
+#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
 
-SetDefaultMouseSpeed 10
+SetDefaultMouseSpeed 16
 
 ; 路线开始的点位 - 1
 global routeIndex := 0
@@ -15,38 +14,10 @@ global BUTTON_SLEEP := 60 ; 点击按钮的延时
 
 ; 路线
 global routes := [
-    {row: 6, column: 1, x: 36, y: 903, movX: 400, crusade: true}, ; 1
-    {row: 6, column: 1, x: 563, y: 202}, ; 2
-    {row: 6, column: 1, x: 1536, y: 241}, ; 3
-    {row: 6, column: 1, x: 1500, y: 571}, ; 4
-    {row: 6, column: 1, x: 792, y: 1056, movY: -100}, ; 5
-    {row: 6, column: 2, x: 1053, y: 264}, ; 6 -> 层岩
-    {row: 6, column: 2, x: 1065, y: 498}, ; 7
-    {row: 6, column: 2, x: 1065, y: 498}, ; 8
-    {row: 6, column: 2, x: 1140, y: 899}, ; 9
-    {row: 6, column: 2, x: 1216, y: 1048, movX: -400}, ; 10
-    {row: 10, column: 2, x: 1044, y: 807}, ; 11 -> 枫丹
-    {row: 10, column: 2, x: 1044, y: 807}, ; 12
-    {row: 10, column: 2, x: 1147, y: 955}, ; 13
-    {row: 9, column: 2, x: 1275, y: 265}, ; 14
-    {row: 10, column: 3, x: 683, y: 461}, ; 15
-    {row: 10, column: 3, x: 961, y: 648}, ; 16
-    {row: 10, column: 3, x: 1590, y: 442}, ; 17
-    {row: 7, column: 1, x: 1315, y: 1019, wait: 100}, ; 18 -> 须弥鸡哥
-    {row: 7, column: 1, x: 921, y: 579, selectX: 1321, selectY: 731}, ; 19
-    {row: 7, column: 1, x: 6, y: 605}, ; 20
-    {row: 7, column: 1, x: 94, y: 800}, ; 21
-    {row: 7, column: 1, x: 851, y: 948}, ; 22
-    {row: 8, column: 1, x: 1186, y: 242}, ; 23
-    {row: 7, column: 2, x: 650, y: 593}, ; 24
-    {row: 7, column: 2, x: 1190, y: 223}, ; 25
-    {row: 7, column: 2, x: 1229, y: 32}, ; 26
-    {row: 4, column: 3, x: 793, y: 720}, ; 27
-    {row: 4, column: 1, x: 1504, y: 503, selectX: 1370, selectY: 734}, ; 28
-    {row: 5, column: 2, x: 954, y: 597}, ; 29
-    ; 带传奇
-    {row: 9, column: 1, x: 1460, y: 430}, ; 30
-    {row: 10, column: 3, x: 1195, y: 420}, ; 31 龙蜥
+    {row: 11, column: 1, x: 790, y: 474, crusade: true}, ; 1
+    {row: 11, column: 1, x: 920, y: 472, selectX: 1345, selectY: 733}, ; 2
+    {row: 11, column: 1, x: 908, y: 542, selectX: 1345, selectY: 733}, ; 3
+    {row: 11, column: 1, x: 908, y: 542, selectX: 1345, selectY: 733}, ; 3
 ]
 
 Right::
