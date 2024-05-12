@@ -5,7 +5,7 @@ InstallMouseHook
 SetDefaultMouseSpeed 16
 
 ; 路线开始的点位 - 1
-global routeIndex := 1
+global routeIndex := 3
 
 ; 常量
 
@@ -16,38 +16,19 @@ global quickPickPause := false
 
 ; 路线
 global routes := [
-    {row: 6, column: 1, x: 36, y: 903, movX: 400, crusade: true}, ; 1
-    {row: 6, column: 1, x: 563, y: 202}, ; 2
-    {row: 6, column: 1, x: 1536, y: 241}, ; 3
-    {row: 6, column: 1, x: 1500, y: 571}, ; 4
-    {row: 6, column: 1, x: 792, y: 1056, movY: -100}, ; 5
-    {row: 6, column: 2, x: 1053, y: 264}, ; 6 -> 层岩
-    {row: 6, column: 2, x: 1065, y: 498}, ; 7
-    {row: 6, column: 2, x: 1065, y: 498}, ; 8
-    {row: 6, column: 2, x: 1140, y: 899}, ; 9
-    {row: 6, column: 2, x: 1216, y: 1048, movX: -400}, ; 10
-    {row: 10, column: 2, x: 1044, y: 807}, ; 11 -> 枫丹
-    {row: 10, column: 2, x: 1044, y: 807}, ; 12
-    {row: 10, column: 2, x: 1147, y: 955}, ; 13
-    {row: 9, column: 2, x: 1275, y: 265}, ; 14
-    {row: 10, column: 3, x: 683, y: 461}, ; 15
-    {row: 10, column: 3, x: 961, y: 648}, ; 16
-    {row: 10, column: 3, x: 1590, y: 442}, ; 17
-    {row: 7, column: 1, x: 1315, y: 1019, wait: 100}, ; 18 -> 须弥鸡哥
-    {row: 7, column: 1, x: 921, y: 579, selectX: 1321, selectY: 731}, ; 19
-    {row: 7, column: 1, x: 6, y: 605}, ; 20
-    {row: 7, column: 1, x: 94, y: 800}, ; 21
-    {row: 7, column: 1, x: 851, y: 948}, ; 22
-    {row: 8, column: 1, x: 1186, y: 242}, ; 23
-    {row: 7, column: 2, x: 650, y: 593}, ; 24
-    {row: 7, column: 2, x: 1190, y: 223}, ; 25
-    {row: 7, column: 2, x: 1229, y: 32}, ; 26
-    {row: 4, column: 3, x: 793, y: 720}, ; 27
-    {row: 4, column: 1, x: 1504, y: 503, selectX: 1370, selectY: 734}, ; 28
-    {row: 5, column: 2, x: 954, y: 597}, ; 29
-    ; 带传奇
-    {row: 9, column: 1, x: 1460, y: 430}, ; 30
-    {row: 10, column: 3, x: 1195, y: 420}, ; 31 龙蜥
+    {row: 6, column: 3, x: 765, y: 332, crusade: true}, ; 1
+    {row: 6, column: 3, x: 772, y: 468}, ; 2
+    {row: 6, column: 3, x: 422, y: 693}, ; 3
+    {row: 6, column: 3, x: 210, y: 695}, ; 4
+    {row: 7, column: 1, x: 921, y: 579, selectX: 1321, selectY: 731}, ; 5
+    {row: 7, column: 1, x: 1151, y: 996}, ; 6
+    {row: 7, column: 1, x: 1739, y: 869}, ; 7
+    {row: 8, column: 2, x: 1737, y: 635}, ; 8
+    {row: 8, column: 1, x: 620, y: 157}, ; 9
+    {row: 8, column: 2, x: 950, y: 576, selectX: 1321, selectY: 731}, ; 10
+    {row: 8, column: 2, x: 345, y: 203}, ; 11
+    {row: 8, column: 3, x: 1492, y: 949, wait: 160}, ; 12
+    {row: 8, column: 3, x: 1478, y: 336}, ; 13
 ]
 
 Right::
