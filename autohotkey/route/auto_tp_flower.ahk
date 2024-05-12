@@ -1,7 +1,8 @@
+#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
 
-SetDefaultMouseSpeed 10
+SetDefaultMouseSpeed 16
 
 ; 路线开始的点位 - 1
 global routeIndex := 0
@@ -13,38 +14,29 @@ global BUTTON_SLEEP := 60 ; 点击按钮的延时
 
 ; 路线
 global routes := [
-    {row: 6, column: 1, x: 36, y: 903, movX: 400, crusade: true}, ; 1
-    {row: 6, column: 1, x: 563, y: 202}, ; 2
-    {row: 6, column: 1, x: 1536, y: 241}, ; 3
-    {row: 6, column: 1, x: 1500, y: 571}, ; 4
-    {row: 6, column: 1, x: 792, y: 1056, movY: -100}, ; 5
-    {row: 6, column: 2, x: 1053, y: 264}, ; 6 -> 层岩
-    {row: 6, column: 2, x: 1065, y: 498}, ; 7
-    {row: 6, column: 2, x: 1065, y: 498}, ; 8
-    {row: 6, column: 2, x: 1140, y: 899}, ; 9
-    {row: 6, column: 2, x: 1216, y: 1048, movX: -400}, ; 10
-    {row: 10, column: 2, x: 1044, y: 807}, ; 11 -> 枫丹
-    {row: 10, column: 2, x: 1044, y: 807}, ; 12
-    {row: 10, column: 2, x: 1147, y: 955}, ; 13
-    {row: 9, column: 2, x: 1275, y: 265}, ; 14
-    {row: 10, column: 3, x: 683, y: 461}, ; 15
-    {row: 10, column: 3, x: 961, y: 648}, ; 16
-    {row: 10, column: 3, x: 1590, y: 442}, ; 17
-    {row: 7, column: 1, x: 1315, y: 1019, wait: 100}, ; 18 -> 须弥鸡哥
-    {row: 7, column: 1, x: 921, y: 579, selectX: 1321, selectY: 731}, ; 19
-    {row: 7, column: 1, x: 6, y: 605}, ; 20
-    {row: 7, column: 1, x: 94, y: 800}, ; 21
-    {row: 7, column: 1, x: 851, y: 948}, ; 22
-    {row: 8, column: 1, x: 1186, y: 242}, ; 23
-    {row: 7, column: 2, x: 650, y: 593}, ; 24
-    {row: 7, column: 2, x: 1190, y: 223}, ; 25
-    {row: 7, column: 2, x: 1229, y: 32}, ; 26
-    {row: 4, column: 3, x: 793, y: 720}, ; 27
-    {row: 4, column: 1, x: 1504, y: 503, selectX: 1370, selectY: 734}, ; 28
-    {row: 5, column: 2, x: 954, y: 597}, ; 29
-    ; 带传奇
-    {row: 9, column: 1, x: 1460, y: 430}, ; 30
-    {row: 10, column: 3, x: 1195, y: 420}, ; 31 龙蜥
+    {row: 1, column: 3, x: 936, y: 496, selectX: 1345, selectY: 733, crusade: true}, ; 1
+    {row: 3, column: 1, x: 1188, y: 825}, ; 2
+    {row: 7, column: 2, x: 1388, y: 129}, ; 3
+    {row: 7, column: 2, x: 1227, y: 33}, ; 4
+    {row: 7, column: 2, x: 891, y: 24, wait: 160}, ; 5
+    {row: 7, column: 2, x: 613, y: 325}, ; 6
+    {row: 7, column: 1, x: 1073, y: 804}, ; 7
+    {row: 8, column: 2, x: 824, y: 517}, ; 8
+    {row: 6, column: 3, x: 771, y: 466}, ; 9
+    {row: 3, column: 2, x: 1176, y: 579}, ; 10
+    {row: 3, column: 2, x: 1389, y: 513}, ; 11
+    {row: 2, column: 3, x: 656, y: 1021}, ; 12
+    {row: 10, column: 3, x: 891, y: 413}, ; 13
+    {row: 4, column: 3, x: 933, y: 988}, ; 14
+    {row: 4, column: 2, x: 1654, y: 512}, ; 15
+    {row: 4, column: 2, x: 1031, y: 945}, ; 16
+    {row: 4, column: 2, x: 850, y: 923}, ; 17
+    {row: 4, column: 1, x: 882, y: 577, wait: 160}, ; 18
+    {row: 5, column: 1, x: 824, y: 546}, ; 19
+    {row: 5, column: 3, x: 1054, y: 125}, ; 20
+    {row: 5, column: 2, x: 584, y: 526}, ; 21
+    {row: 6, column: 1, x: 732, y: 899}, ; 22
+    {row: 6, column: 1, x: 36, y: 903, movX: 400}, ; 23
 ]
 
 Right::
