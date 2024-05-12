@@ -14,38 +14,25 @@ global BUTTON_SLEEP := 60 ; 点击按钮的延时
 
 ; 路线
 global routes := [
-    {row: 6, column: 1, x: 36, y: 903, movX: 400, crusade: true}, ; 1
-    {row: 6, column: 1, x: 563, y: 202}, ; 2
-    {row: 6, column: 1, x: 1536, y: 241}, ; 3
-    {row: 6, column: 1, x: 1500, y: 571}, ; 4
-    {row: 6, column: 1, x: 792, y: 1056, movY: -100}, ; 5
-    {row: 6, column: 2, x: 1053, y: 264}, ; 6 -> 层岩
-    {row: 6, column: 2, x: 1065, y: 498}, ; 7
-    {row: 6, column: 2, x: 1065, y: 498}, ; 8
-    {row: 6, column: 2, x: 1140, y: 899}, ; 9
-    {row: 6, column: 2, x: 1216, y: 1048, movX: -400}, ; 10
-    {row: 10, column: 2, x: 1044, y: 807}, ; 11 -> 枫丹
-    {row: 10, column: 2, x: 1044, y: 807}, ; 12
-    {row: 10, column: 2, x: 1147, y: 955}, ; 13
-    {row: 9, column: 2, x: 1275, y: 265}, ; 14
-    {row: 10, column: 3, x: 683, y: 461}, ; 15
-    {row: 10, column: 3, x: 961, y: 648}, ; 16
-    {row: 10, column: 3, x: 1590, y: 442}, ; 17
-    {row: 7, column: 1, x: 1315, y: 1019, wait: 100}, ; 18 -> 须弥鸡哥
-    {row: 7, column: 1, x: 921, y: 579, selectX: 1321, selectY: 731}, ; 19
-    {row: 7, column: 1, x: 6, y: 605}, ; 20
-    {row: 7, column: 1, x: 94, y: 800}, ; 21
-    {row: 7, column: 1, x: 851, y: 948}, ; 22
-    {row: 8, column: 1, x: 1186, y: 242}, ; 23
-    {row: 7, column: 2, x: 650, y: 593}, ; 24
-    {row: 7, column: 2, x: 1190, y: 223}, ; 25
-    {row: 7, column: 2, x: 1229, y: 32}, ; 26
-    {row: 4, column: 3, x: 793, y: 720}, ; 27
-    {row: 4, column: 1, x: 1504, y: 503, selectX: 1370, selectY: 734}, ; 28
-    {row: 5, column: 2, x: 954, y: 597}, ; 29
-    ; 带传奇
-    {row: 9, column: 1, x: 1460, y: 430}, ; 30
-    {row: 10, column: 3, x: 1195, y: 420}, ; 31 龙蜥
+    {row: 7, column: 1, x: 1076, y: 806, crusade: true}, ; 1
+    {row: 7, column: 1, x: 1223, y: 876}, ; 2
+    {row: 5, column: 1, x: 823, y: 543}, ; 3
+    {row: 5, column: 1, x: 699, y: 725}, ; 4
+    {row: 5, column: 1, x: 699, y: 725}, ; 5
+    {row: 5, column: 1, x: 820, y: 699}, ; 6
+    {row: 5, column: 1, x: 1021, y: 806}, ; 7
+    {row: 5, column: 1, x: 1192, y: 684}, ; 8
+    {row: 5, column: 2, x: 711, y: 329}, ; 9 -> 雷音
+    {row: 5, column: 2, x: 910, y: 323}, ; 10
+    {row: 5, column: 2, x: 910, y: 223, selectX: 1345, selectY: 733}, ; 11
+    {row: 5, column: 2, x: 1105, y: 450}, ; 12
+    {row: 5, column: 2, x: 951, y: 593}, ; 13
+    {row: 5, column: 3, x: 915, y: 561, selectX: 1345, selectY: 733}, ; 14 -> 土狗
+    {row: 6, column: 1, x: 36, y: 903, movX: 400}, ; 15 -> 渊下宫
+    {row: 6, column: 1, x: 350, y: 105, movStartX: 1000, movStartY: 100, movY: 800}, ; 16
+    {row: 6, column: 1, x: 1809, y: 310, movStartX: 1000, movStartY: 100, movY: 600}, ; 17
+    {row: 6, column: 1, x: 1444, y: 389}, ; 18
+    {row: 6, column: 1, x: 1195, y: 826, movY: -800}, ; 19
 ]
 
 Right::
@@ -84,6 +71,8 @@ executeStep(step) {
     selectX := 0
     selectY := 0
     wait := 0
+    movStartX := 0
+    movStartY := 0
 
     if (HasProp(step, "crusade") = true) {
         crusade := step.crusade
@@ -102,6 +91,12 @@ executeStep(step) {
     }
     if (HasProp(step, "wait")) {
         wait := step.wait
+    }
+    if (HasProp(step, "movStartX")) {
+        movStartX := step.movStartX
+    }
+    if (HasProp(step, "movStartY")) {
+        movStartY := step.movStartY
     }
 
     x := step.x
@@ -152,8 +147,12 @@ executeStep(step) {
 
     ; 拖动
     if (movX != 0 || movY != 0) {
-        MouseGetPos &xpos, &ypos
-        SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos + movX . " " . ypos + movY . " Up}"
+        if (movStartX != 0 && movStartY != 0) {
+            SendEvent "{Click " . movStartX . " " . movStartY . " Down}{Click " . movStartX + movX . " " . movStartY + movY . " Up}"
+        } else {
+            MouseGetPos &xpos, &ypos
+            SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos + movX . " " . ypos + movY . " Up}"
+        }
         Sleep BUTTON_SLEEP
     }
 
