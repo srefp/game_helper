@@ -1,3 +1,5 @@
+; 魔像路线
+#IfWinActive ahk_class UnityWndClass ;;限定以下程序只运行在unity类游戏里面
 InstallKeybdHook
 InstallMouseHook
 
@@ -7,23 +9,9 @@ SetDefaultMouseSpeed 10
 global routeIndex := 0
 
 ; 常量
-; 鼠标类型
-global MOVE_CLICK := 1 ; 移动并点击
-global MOVE_CLICK_BOOK := 2 ; 移动并点击
-global MOVE := 3 ; 移动
-global DRAG := 4 ; 拖动
-global KEYBOARD := 5 ; 按键
-global WHEEL_DOWN := 6 ; 滚轮
-global SHIFT := 7 ; 滚轮
-global MOVE_CLICK_LONG := 8 ; 长按
-global MONSTER_TRACK := 9 ; 追踪首领
-global MOVE_CLICK_DEALY1 := 10 ; 副本锚点
 
 ; 延时
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
-global BUTTON_SLEEP_BOOK := 400 ; 追踪延迟
-
-CONFIRM := {type: MOVE_CLICK, data: {x: 1678, y: 1005}}
 
 ; 路线
 global routes := [
@@ -56,7 +44,9 @@ global routes := [
     {row: 4, column: 3, x: 793, y: 720}, ; 27
     {row: 4, column: 1, x: 1504, y: 503, selectX: 1370, selectY: 734}, ; 28
     {row: 5, column: 2, x: 954, y: 597}, ; 29
-
+    ; 带传奇
+    {row: 9, column: 1, x: 1460, y: 430}, ; 30
+    {row: 10, column: 3, x: 1195, y: 420}, ; 31 龙蜥
 ]
 
 Right::
@@ -221,4 +211,11 @@ XButton2::
     Send "{Click}"
     Sleep 80
     DllCall("SetCursorPos", "int", xpos, "int", ypos)
+}
+
+; 显示当前坐标
+Up::
+{
+    MouseGetPos &xpos, &ypos
+    ToolTip "" . xpos . ", " . ypos
 }
