@@ -2,38 +2,51 @@
 InstallKeybdHook
 InstallMouseHook
 
-SetDefaultMouseSpeed 16
-
 ; 路线开始的点位 - 1
 global routeIndex := 0
 
-; 常量
+; 配置项
+global SCREEN := "1080P" ; 可选 1080P、2K，默认1080P
 
-; 延时
+global crusadePos := [294, 545] ; 讨伐按钮的位置
+global clearWheelPos := [956, 283] ; 清空滚轮的位置
+global monsterColumnPos := [500, 680, 860] ; 三列怪的不同x值
+global monsterRowPos := 350 ; 怪的y值
+global rowWheelNum := 9 ; 滚动一行需要的滚轮数
+global trackMonsterPos := [1460, 840] ; 追踪怪的位置
+global confirmPos := [1678, 1005] ; 确认按钮的位置
+global twoSelection := [1370, 734] ; 二选一按钮的位置
+
+if (SCREEN = "2K") {
+}
+
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
 
 ; 路线
 global routes := [
-    {row: 7, column: 1, x: 1076, y: 806, crusade: true}, ; 1
-    {row: 7, column: 1, x: 1223, y: 876}, ; 2
-    {row: 5, column: 1, x: 823, y: 543}, ; 3
-    {row: 5, column: 1, x: 699, y: 725}, ; 4
-    {row: 5, column: 1, x: 699, y: 725}, ; 5
-    {row: 5, column: 1, x: 820, y: 699}, ; 6
-    {row: 5, column: 1, x: 1021, y: 806}, ; 7
-    {row: 5, column: 1, x: 1192, y: 684}, ; 8
-    {row: 5, column: 2, x: 711, y: 329}, ; 9 -> 雷音
-    {row: 5, column: 2, x: 910, y: 323}, ; 10
-    {row: 5, column: 2, x: 910, y: 223, selectX: 1345, selectY: 733}, ; 11
-    {row: 5, column: 2, x: 1105, y: 450}, ; 12
-    {row: 5, column: 2, x: 951, y: 593}, ; 13
-    {row: 5, column: 3, x: 915, y: 561, selectX: 1345, selectY: 733}, ; 14 -> 土狗
-    {row: 6, column: 1, x: 36, y: 903, movX: 400}, ; 15 -> 渊下宫
-    {row: 6, column: 1, x: 350, y: 105, movStartX: 1000, movStartY: 100, movY: 800}, ; 16
-    {row: 6, column: 1, x: 1809, y: 310, movStartX: 1000, movStartY: 100, movY: 600}, ; 17
-    {row: 6, column: 1, x: 1444, y: 389}, ; 18
-    {row: 6, column: 1, x: 1195, y: 826, movY: -800}, ; 19
+;    {monster: [7, 1], pos: [1076, 806]}, ; 1
+    {monster: [7, 1], pos: [1223, 876]}, ; 2
+    {monster: [5, 1], pos: [823, 543]}, ; 3
+    {monster: [5, 1], pos: [699, 725]}, ; 4
+    {monster: [5, 1], pos: [699, 725]}, ; 5
+    {monster: [5, 1], pos: [820, 699]}, ; 6
+    {monster: [5, 1], pos: [1021, 806]}, ; 7
+    {monster: [5, 1], pos: [1192, 684]}, ; 8
+    {monster: [5, 2], pos: [711, 329]}, ; 9 -> 雷音
+    {monster: [5, 2], pos: [910, 323]}, ; 10
+    {monster: [5, 2], pos: [910, 223], select: twoSelection}, ; 11
+    {monster: [5, 2], pos: [1105, 450]}, ; 12
+    {monster: [5, 2], pos: [951, 593]}, ; 13
+    {monster: [5, 3], pos: [915, 561], select: twoSelection}, ; 14 -> 土狗
+    {monster: [6, 1], pos: [36, 903], movX: 400}, ; 15 -> 渊下宫
+    {monster: [6, 1], pos: [350, 105], movStartX: 1000, movStartY: 100, movY: 800}, ; 16
+    {monster: [6, 1], pos: [1809, 310], movStartX: 1000, movStartY: 100, movY: 600}, ; 17
+    {monster: [6, 1], pos: [1444, 389]}, ; 18
+    {monster: [6, 1], pos: [1195, 826], movY: -800}, ; 19
 ]
+
+SetDefaultMouseSpeed 10
+global quickPickPause := false
 
 Right::
 {
@@ -42,7 +55,7 @@ Right::
         routeIndex++
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
-        executeStep routes[routeIndex]
+        executeStep routes[routeIndex], routeIndex
     }
 }
 
@@ -53,87 +66,82 @@ Left::
         routeIndex--
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
-        executeStep routes[routeIndex]
+        executeStep routes[routeIndex], routeIndex
     }
 }
 
 ; 上一次追踪的怪
-global prevMonster := {row: 0, column: 0}
+global prevMonster := [0, 0]
 
 ; 执行每一步
-executeStep(step) {
+executeStep(step, routeIndex) {
+    global quickPickPause
     global prevMonster
 
+    ; 暂停快捡
+    quickPickPause := true
+
     ; 获取值
-    crusade := false
     movX := 0
     movY := 0
     selectX := 0
     selectY := 0
     wait := 0
-    movStartX := 0
-    movStartY := 0
 
-    if (HasProp(step, "crusade") = true) {
-        crusade := step.crusade
-    }
     if (HasProp(step, "movX")) {
         movX := step.movX
     }
     if (HasProp(step, "movY")) {
         movY := step.movY
     }
-    if (HasProp(step, "selectX")) {
-        selectX := step.selectX
+    if (HasProp(step, "select")) {
+        selectX := step.select[1]
     }
-    if (HasProp(step, "selectY")) {
-        selectY := step.selectY
+    if (HasProp(step, "select")) {
+        selectY := step.select[2]
     }
     if (HasProp(step, "wait")) {
         wait := step.wait
     }
-    if (HasProp(step, "movStartX")) {
-        movStartX := step.movStartX
-    }
-    if (HasProp(step, "movStartY")) {
-        movStartY := step.movStartY
-    }
 
-    x := step.x
-    y := step.y
-    row := step.row
-    column := step.column
+    x := step.pos[1]
+    y := step.pos[2]
+    row := step.monster[1]
+    column := step.monster[2]
 
     ; 开书
     Send "{F1}"
     Sleep 600
 
     ; 点击讨伐
-    if (crusade = true) {
-        DllCall("SetCursorPos", "int", 294, "int", 545)
+    if (routeIndex = 1) {
+        DllCall("SetCursorPos", "int", crusadePos[1], "int", crusadePos[2])
         Send "{Click}"
         Sleep 200
     }
 
-    DllCall("SetCursorPos", "int", 956, "int", 283) ; 清空滚轮
-    SendInput "{LButton down}"
-    Sleep 60
-    SendInput "{LButton up}"
-    wheel := (row - 1) * 9
-    LOOP wheel {
-        Send "{WheelDown}"
-    }
-    Sleep 100
+    sameMonster := prevMonster[1] = row && prevMonster[2] = column
+    if (!sameMonster) {
+        DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
+        SendInput "{LButton down}"
+        Sleep 60
+        SendInput "{LButton up}"
+        wheel := (row - 1) * rowWheelNum
+        LOOP wheel {
+            Send "{WheelDown}"
+        }
+        Sleep 100
 
-    map := [500, 680, 860]
-    monsterPosX := map[column]
-    DllCall("SetCursorPos", "int", monsterPosX, "int", 350)
-    Send "{Click}"
-    Sleep 60
+        map := monsterColumnPos
+        monsterPosX := map[column]
+        DllCall("SetCursorPos", "int", monsterPosX, "int", monsterRowPos)
+        Send "{Click}"
+        Sleep 60
+    }
 
     ; 追踪怪
-    DllCall("SetCursorPos", "int", 1460, "int", 840)
-    if (prevMonster.row = row && prevMonster.column = column) {
+    DllCall("SetCursorPos", "int", trackMonsterPos[1], "int", trackMonsterPos[2])
+    if (sameMonster) {
         Send "{Click}"
         Sleep 60
         Send "{Click}"
@@ -141,18 +149,14 @@ executeStep(step) {
     } else {
         Send "{Click}"
         Sleep 500
-        prevMonster.row := row
-        prevMonster.column := column
+        prevMonster[1] := row
+        prevMonster[2] := column
     }
 
     ; 拖动
     if (movX != 0 || movY != 0) {
-        if (movStartX != 0 && movStartY != 0) {
-            SendEvent "{Click " . movStartX . " " . movStartY . " Down}{Click " . movStartX + movX . " " . movStartY + movY . " Up}"
-        } else {
-            MouseGetPos &xpos, &ypos
-            SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos + movX . " " . ypos + movY . " Up}"
-        }
+        MouseGetPos &xpos, &ypos
+        SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos + movX . " " . ypos + movY . " Up}"
         Sleep BUTTON_SLEEP
     }
 
@@ -178,6 +182,9 @@ executeStep(step) {
     DllCall("SetCursorPos", "int", 1678, "int", 1005)
     Send "{Click}"
     Sleep BUTTON_SLEEP
+    
+    ; 开始快捡
+    quickPickPause := false
 }
 
 ; 快速捡东西，按后退键开始咔咔乱捡，再次按后退键停止捡
@@ -187,13 +194,15 @@ XButton1::
     autoPick := true
     while autoPick
     {
-        SendInput "f"
-        Send "{WheelDown}"
-        Loop 5 {
-            Sleep 1
-            if (GetKeyState("XButton1", "P") || GetKeyState("Shift", "P") || GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("Alt", "P")) {
-                autoPick := false
-                break
+        if (!quickPickPause) {
+            SendInput "f"
+            Send "{WheelDown}"
+            Loop 5 {
+                Sleep 1
+                if (GetKeyState("XButton1", "P") || GetKeyState("Shift", "P") || GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("Alt", "P")) {
+                    autoPick := false
+                    break
+                }
             }
         }
     }
@@ -203,9 +212,10 @@ XButton1::
 XButton2::
 {
     Send "{Click}"
+    MouseGetPos &xpos, &ypos
     Sleep 90
     MouseGetPos &xpos, &ypos
-    DllCall("SetCursorPos", "int", 1678 + Random(-2, 2), "int", 1005 + Random(-2, 2))
+    DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
     Send "{Click}"
     Sleep 80
     DllCall("SetCursorPos", "int", xpos, "int", ypos)
