@@ -12,7 +12,7 @@ if (SCREEN = "2K") {
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
-SetDefaultMouseSpeed 10 ; 拖动地图时的鼠标移速
+SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 #HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
