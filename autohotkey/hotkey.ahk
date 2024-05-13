@@ -194,6 +194,24 @@ XButton2::
 
 global debugMode := false
 
+global timingIsStart := true
+
+FileEncoding "UTF-8"
+
+; 计时
+Down::
+{
+    global timingIsStart
+    startTime := A_Now
+    startTimeStr := FormatTime(startTime, "yyyy-MM-dd HH:mm:ss")
+    if (timingIsStart) {
+        FileAppend "锄地开始时间：" . startTimeStr . "`n", timingFile
+    } else {
+        FileAppend "锄地结束时间：" . startTimeStr . "`n", timingFile
+    }
+    timingIsStart := !timingIsStart
+}
+
 ; 显示当前坐标
 Up::
 {
