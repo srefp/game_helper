@@ -204,19 +204,16 @@ Up::
         global routeIndex, routes
         if (routeIndex = 0) {
             ToolTip "路线未开始。"
-            return
-        }
-
-        if (routeIndex >= routes.Length) {
+        } else if (routeIndex >= routes.Length) {
             ToolTip "路线已结束！"
-            return
-        }
-
-        route := routes[routeIndex]
-        if (HasProp(route, "name")) {
-            ToolTip "当前是第" . (routeIndex + 1) . "个点位：" . route.name . "。"
         } else {
-            ToolTip "当前是第" . (routeIndex + 1) . "个点位。"
+            route := routes[routeIndex]
+            if (HasProp(route, "name")) {
+                ToolTip "当前是第" . (routeIndex + 1) . "个点位：" . route.name . "。"
+            } else {
+                ToolTip "当前是第" . (routeIndex + 1) . "个点位。"
+            }
         }
+        SetTimer () => ToolTip(), -5000
     }
 }

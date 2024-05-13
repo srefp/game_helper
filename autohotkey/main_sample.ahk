@@ -20,7 +20,8 @@
 
 #Include "./route/-6.ahk" ; 引入路线文件
 global SCREEN := "1080P" ; 可选 1080P、2K，默认1080P
-global routeIndex := 1 ; 路线开始的点位 - 1
+global routeIndex := 1 ; 路线开始的点位 0表示带起点，1表示忽略起点
+global hintEnabled := false ; 是否开启提示
 
 
 #Include "./hotkey.ahk" ; 引入快捷键文件
