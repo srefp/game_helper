@@ -8,6 +8,22 @@ global trackMonsterPos := [1460, 840] ; 追踪怪的位置
 global confirmPos := [1678, 1005] ; 确认按钮的位置
 global selection := [[1370, 734]] ; 点击锚点时多选按钮的位置
 
+screenWidth := A_ScreenWidth
+screenHeight := A_ScreenHeight
+
+global SCREEN
+
+if (screenWidth = 1920 && screenHeight = 1080) {
+    SCREEN := "1080P"
+    ToolTip "当前为1080P的屏幕，已为您自动切换到1080P自动传送！"
+} else if (screenWidth = 2560 && screenHeight = 1440) {
+    SCREEN := "2K"
+    ToolTip "当前为2K的屏幕，已为您自动切换到2K自动传送！"
+} else {
+    ToolTip "未检测到您当前的屏幕分辨率，或暂不支持您的屏幕分辨率。"
+}
+SetTimer () => ToolTip(), -2000
+
 if (SCREEN = "2K") {
     crusadePos := [396, 730]
     clearWheelPos := [1274, 382]
@@ -24,6 +40,7 @@ SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 #HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
+ProcessSetPriority "High" ; 高优先模式
 global quickPickPause := false
 global crusade := true
 
@@ -103,9 +120,15 @@ executeStep(step, routeIndex) {
     row := step.monster[1]
     column := step.monster[2]
 
+    sameMonster := prevMonster[1] = row && prevMonster[2] = column
+
     ; 开书
     Send "{F1}"
-    Sleep 600
+    if (sameMonster) {
+        Sleep BOOK_SLEEP
+    } else {
+        Sleep BOOK_SLEEP2
+    }
 
     ; 点击讨伐
     if (crusade) {
@@ -115,7 +138,6 @@ executeStep(step, routeIndex) {
         crusade := false
     }
 
-    sameMonster := prevMonster[1] = row && prevMonster[2] = column
     if (!sameMonster) {
         DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
         SendInput "{LButton down}"
@@ -138,12 +160,16 @@ executeStep(step, routeIndex) {
     DllCall("SetCursorPos", "int", trackMonsterPos[1], "int", trackMonsterPos[2])
     if (sameMonster) {
         Send "{Click}"
-        Sleep 60
+        Sleep 50
         Send "{Click}"
-        Sleep 500
+        if (sameMonster) {
+            Sleep MAP_SLEEP
+        } else {
+            Sleep MAP_SLEEP2
+        }
     } else {
         Send "{Click}"
-        Sleep 500
+        Sleep MAP_SLEEP
         prevMonster[1] := row
         prevMonster[2] := column
     }

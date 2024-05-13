@@ -16,13 +16,15 @@
 ;
 ; 三、配置
 ;   1、在引入路线文件的配置中，修改为你所需要的路线文件进行引入。
-;   2、SCREEN可以配置为 "2K" 支持2K屏幕。
-;   3、默认第一个点位需要手动传送过去，如果是自己开地，将routeIndex改为0，从而传送到第一个点位。
+;   2、默认第一个点位需要手动传送过去，如果是自己开地，将routeIndex改为0，从而传送到第一个点位。
 
 #Include "./route/-6.ahk" ; 引入路线文件
-global SCREEN := "1080P" ; 可选 1080P、2K，默认1080P
 global routeIndex := 1 ; 路线开始的点位 0表示带起点，1表示忽略起点
 global hintEnabled := false ; 是否开启提示
+global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
+global BOOK_SLEEP2 := 500 ; 跨怪开书等待时间
+global MAP_SLEEP := 300 ; 不跨怪Map等待时间
+global MAP_SLEEP2 := 450 ; 跨怪Map等待时间
 global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
 
 
