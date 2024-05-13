@@ -9,6 +9,14 @@ global confirmPos := [1678, 1005] ; 确认按钮的位置
 global selection := [[1370, 734]] ; 点击锚点时多选按钮的位置
 
 if (SCREEN = "2K") {
+    crusadePos := [396, 730]
+    clearWheelPos := [1274, 382]
+    monsterColumnPos := [660, 900, 1140]
+    monsterRowPos := 460
+    rowWheelNum := 9
+    trackMonsterPos := [1913, 1120]
+    confirmPos := [2255, 1347]
+    selection := [[1908, 976]]
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
@@ -60,10 +68,20 @@ executeStep(step, routeIndex) {
     selectY := 0
     wait := 0
 
-    if (HasProp(step, "movX")) {
+    is2K := SCREEN = "2K"
+
+    if (is2K) {
+        if (HasProp(step, "movX2K")) {
+            movX := step.movX2K
+        }
+    } else if (HasProp(step, "movX")) {
         movX := step.movX
     }
-    if (HasProp(step, "movY")) {
+    if (is2K) {
+        if (HasProp(step, "movY2K")) {
+            movY := step.movY2K
+        }
+    } else if (HasProp(step, "movY")) {
         movY := step.movY
     }
     if (HasProp(step, "select")) {
@@ -74,8 +92,14 @@ executeStep(step, routeIndex) {
         wait := step.wait
     }
 
-    x := step.pos[1]
-    y := step.pos[2]
+    if (is2K) {
+        x := step.pos2K[1]
+        y := step.pos2K[2]
+    } else {
+        x := step.pos[1]
+        y := step.pos[2]
+    }
+
     row := step.monster[1]
     column := step.monster[2]
 
@@ -150,7 +174,7 @@ executeStep(step, routeIndex) {
     }
 
     ; 确认传送
-    DllCall("SetCursorPos", "int", 1678, "int", 1005)
+    DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
     Send "{Click}"
     Sleep BUTTON_SLEEP
 
