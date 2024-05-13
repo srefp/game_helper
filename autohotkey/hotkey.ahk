@@ -198,17 +198,28 @@ global timingIsStart := true
 
 FileEncoding "UTF-8"
 
+global gamingStartTime := A_Now
+
 ; 计时
 Down::
 {
-    global timingIsStart
-    startTime := A_Now
-    startTimeStr := FormatTime(startTime, "yyyy-MM-dd HH:mm:ss")
+    global timingIsStart, gamingStartTime
+    curTime := A_Now
+    curTimeStr := FormatTime(curTime, "yyyy-MM-dd HH:mm:ss")
     if (timingIsStart) {
-        FileAppend "锄地开始时间：" . startTimeStr . "`n", timingFile
+        gamingStartTime := A_Now
+        FileAppend "锄地开始时间：" . curTimeStr . "`n", timingFile
+        ToolTip "开始计时!"
     } else {
-        FileAppend "锄地结束时间：" . startTimeStr . "`n", timingFile
+        FileAppend "锄地结束时间：" . curTimeStr . "`n", timingFile
+        seconds := DateDiff(curTime, gamingStartTime, "Seconds")
+        minutes := Floor(seconds / 60)
+        leftSeconds := Mod(seconds, 60)
+        FileAppend "时长：" . minutes . "分钟" . leftSeconds . "秒" . "`n", timingFile
+        ToolTip "结束计时!"
     }
+    SetTimer () => ToolTip(), -2000
+
     timingIsStart := !timingIsStart
 }
 
