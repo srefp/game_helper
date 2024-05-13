@@ -1,10 +1,10 @@
 global routes := [
-    {monster: [6, 1], pos: [36, 903], movX: 400}, ; 1
-    {monster: [6, 1], pos: [563, 202]}, ; 2
-    {monster: [6, 1], pos: [1536, 241]}, ; 3
-    {monster: [6, 1], pos: [1500, 571]}, ; 4
-    {monster: [6, 1], pos: [792, 1056], movY: -100}, ; 5
-    {monster: [6, 2], pos: [1053, 264]}, ; 6 -> 层岩
+    {monster: [6, 1], pos: [36, 903], movX: 400, name: "渊下宫1"}, ; 1
+    {monster: [6, 1], pos: [563, 202], name: "渊下宫2"}, ; 2
+    {monster: [6, 1], pos: [1536, 241], name: "渊下宫3"}, ; 3
+    {monster: [6, 1], pos: [1500, 571], name: "渊下宫4"}, ; 4
+    {monster: [6, 1], pos: [792, 1056], movY: -100, name: "渊下宫5"}, ; 5
+    {monster: [6, 2], pos: [1053, 264], name: "层岩1"}, ; 6 -> 层岩
     {monster: [6, 2], pos: [1065, 498]}, ; 7
     {monster: [6, 2], pos: [1065, 498]}, ; 8
     {monster: [6, 2], pos: [1140, 899]}, ; 9
