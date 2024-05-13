@@ -16,8 +16,8 @@ global quickPickPause := false
 
 ; 路线
 global routes := [
-    {row: 6, column: 1, x: 36, y: 903, movX: 400, crusade: true}, ; 1
-    {row: 6, column: 1, x: 563, y: 202}, ; 2
+;    {row: 6, column: 1, x: 36, y: 903, movX: 400, crusade: true}, ; 1
+    {row: 6, column: 1, x: 563, y: 202, crusade: true}, ; 2
     {row: 6, column: 1, x: 1536, y: 241}, ; 3
     {row: 6, column: 1, x: 1500, y: 571}, ; 4
     {row: 6, column: 1, x: 792, y: 1056, movY: -100}, ; 5
