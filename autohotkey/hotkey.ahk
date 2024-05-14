@@ -222,10 +222,11 @@ XButton1::
     while autoPick
     {
         if (!quickPickPause) {
-            SendInput "f"
+            SendInput "{Blind}f"
+            Send "{WheelDown}"
             Loop 5 {
                 Sleep 1
-                if (GetKeyState("Enter", "P")) {
+                if (GetKeyState("Shift", "P") || GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("Alt", "P")) {
                     autoPick := false
                     break
                 }
