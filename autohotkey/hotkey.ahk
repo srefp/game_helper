@@ -209,25 +209,35 @@ executeStep(step, routeIndex) {
 }
 
 ; 快速捡东西，按后退键开始咔咔乱捡，再次按后退键停止捡
+#MaxThreadsPerHotKey 3
 XButton1::
 {
-    Sleep 500
+    static keepF := false
+    if (keepF) {
+        keepF := false
+        return
+    }
+    keepF := true
     autoPick := true
     while autoPick
     {
         if (!quickPickPause) {
             SendInput "f"
-            Send "{WheelDown}"
             Loop 5 {
                 Sleep 1
-                if (GetKeyState("XButton1", "P") || GetKeyState("Shift", "P") || GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("Alt", "P")) {
+                if (GetKeyState("Enter", "P")) {
                     autoPick := false
                     break
                 }
             }
         }
+        if (!keepF) {
+            break
+        }
     }
+    keepF := false
 }
+#MaxThreadsPerHotKey 1
 
 ; 快速传送，按前进键直接传送
 XButton2::
