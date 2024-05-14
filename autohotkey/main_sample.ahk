@@ -21,12 +21,14 @@
 #Include "./route/-6.ahk" ; 引入路线文件
 global routeIndex := 1 ; 路线开始的点位 0表示带起点，1表示忽略起点
 global hintEnabled := false ; 是否开启提示
+
+global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
+
+
+#Include "./hotkey.ahk" ; 引入快捷键文件
+
 global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
 global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
 global BOOK_SLEEP3 := 600 ; 首次开书等待时间
 global MAP_SLEEP := 300 ; 不跨怪Map等待时间
 global MAP_SLEEP2 := 350 ; 跨怪Map等待时间
-global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
-
-
-#Include "./hotkey.ahk" ; 引入快捷键文件
