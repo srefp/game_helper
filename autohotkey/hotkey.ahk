@@ -164,14 +164,10 @@ executeStep(step, routeIndex) {
         Send "{Click}"
         Sleep 50
         Send "{Click}"
-        if (sameMonster) {
-            Sleep MAP_SLEEP
-        } else {
-            Sleep MAP_SLEEP2
-        }
+        Sleep MAP_SLEEP
     } else {
         Send "{Click}"
-        Sleep MAP_SLEEP
+        Sleep MAP_SLEEP2
         prevMonster[1] := row
         prevMonster[2] := column
     }

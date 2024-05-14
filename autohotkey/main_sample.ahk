@@ -25,7 +25,7 @@ global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
 global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
 global BOOK_SLEEP3 := 600 ; 首次开书等待时间
 global MAP_SLEEP := 300 ; 不跨怪Map等待时间
-global MAP_SLEEP2 := 500 ; 跨怪Map等待时间
+global MAP_SLEEP2 := 350 ; 跨怪Map等待时间
 global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
 
 
