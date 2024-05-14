@@ -124,7 +124,9 @@ executeStep(step, routeIndex) {
 
     ; 开书
     Send "{F1}"
-    if (sameMonster) {
+    if (crusade) {
+        Sleep BOOK_SLEEP3
+    } else if (sameMonster) {
         Sleep BOOK_SLEEP
     } else {
         Sleep BOOK_SLEEP2
