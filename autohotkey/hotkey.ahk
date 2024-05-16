@@ -51,8 +51,15 @@ ProcessSetPriority "High" ; 高优先模式
 global quickPickPause := false
 global crusade := true
 
+global tpForbidden := false
+
 Right::
 {
+    global tpForbidden
+    if (tpForbidden) {
+        return
+    }
+    tpForbidden := true
     global routeIndex, routes
     if (routeIndex >= 0 && routeIndex <= routes.Length) {
         routeIndex++
@@ -60,17 +67,25 @@ Right::
     if (routeIndex > 0 && routeIndex <= routes.Length) {
         executeStep routes[routeIndex], routeIndex
     }
+    SetTimer () => tpForbidden := false , -8000
 }
 
 Left::
 {
+    if (tpForbidden) {
+        return
+    }
     global routeIndex, routes
     if (routeIndex > 0 && routeIndex <= routes.Length + 1) {
         routeIndex--
+        if (routeIndex = 0) {
+            routeIndex := routes.Length
+        }
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
         executeStep routes[routeIndex], routeIndex
     }
+    SetTimer () => tpForbidden := false , -8000
 }
 
 ; 上一次追踪的怪
