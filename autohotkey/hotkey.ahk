@@ -67,7 +67,7 @@ Right::
     if (routeIndex > 0 && routeIndex <= routes.Length) {
         executeStep routes[routeIndex], routeIndex
     }
-    SetTimer () => tpForbidden := false , -8000
+    SetTimer () => tpForbidden := false , -5000
 }
 
 Left::
@@ -224,6 +224,24 @@ executeStep(step, routeIndex) {
     Send "{Click}"
     Sleep BUTTON_SLEEP
 
+    ; 如果出现地脉挡住的情况
+    if (HasProp(step, "try")) {
+        DllCall("SetCursorPos", "int", x, "int", y)
+        Send "{Click}"
+        Sleep 500
+
+        selectX := selection[1][1]
+        selectY := selection[1][2]
+        DllCall("SetCursorPos", "int", selectX, "int", selectY)
+        Send "{Click}"
+        Sleep 160
+
+        ; 确认传送
+        DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
+        Send "{Click}"
+        Sleep BUTTON_SLEEP
+    }
+
     ; 开始快捡
     quickPickPause := false
 }
@@ -309,7 +327,9 @@ Up::
 {
     if (debugMode) {
         MouseGetPos &xpos, &ypos
-        ToolTip "" . xpos . ", " . ypos
+        posText := "" . xpos . ", " . ypos
+        ToolTip posText
+        A_Clipboard := posText
     } else {
         global routeIndex, routes
         if (routeIndex = 0) {
