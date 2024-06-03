@@ -27,25 +27,59 @@ global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计�
 
 #Include "./hotkey.ahk" ; 引入快捷键文件
 
-; 3 - 最快，2 - 中等，1 - 慢
+; 1 慢
+; 2 中等
+; 3 最快
 global tpSpeed := 1
 
-if (tpSpeed = 2) {
-    global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
-    global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
-    global BOOK_SLEEP3 := 600 ; 首次开书等待时间
-    global MAP_SLEEP := 400 ; 不跨怪Map等待时间
-    global MAP_SLEEP2 := 400 ; 跨怪Map等待时间
-} else if (tpSpeed = 1) {
+if (tpSpeed = 1) {
+    global BUTTON_SLEEP := 80 ; 点击按钮的延时
     global BOOK_SLEEP := 550 ; 不跨怪开书等待时间
     global BOOK_SLEEP2 := 700 ; 跨怪开书等待时间
     global BOOK_SLEEP3 := 650 ; 首次开书等待时间
     global MAP_SLEEP := 450 ; 不跨怪Map等待时间
     global MAP_SLEEP2 := 450 ; 跨怪Map等待时间
+    global CANCEL_AND_CLICK_SLEEP := 80 ; 取消后再次点击的等待时间
+    global CRUSADE_SLEEP := 200 ; 点击讨伐后的等待时间
+    global CLICK_DOWN_SLEEP := 80 ; 长按鼠标的等待时间
+    global WHEEL_SLEEP := 120 ; 选怪时滚轮滚动等待时间
+    global SELECT_TWO_WAIT_SLEEP := 600 ; 锚点双选时的等待时间
+    global SELECT_TWO_CLICK_SLEEP := 180 ; 锚点双选时点击后的等待时间
+    global DIRECT_TP_SLEEP := 120 ; 快传等待时间
+    global DIRECT_TP_BACK_SLEEP := 100 ; 快传复位等待时间
+    global QUICK_PICK_SLEEP := 8 ; 快检等待时间，5不意味着5ms！！！
+} else if (tpSpeed = 2) {
+    global BUTTON_SLEEP := 60 ; 点击按钮的延时
+    global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
+    global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
+    global BOOK_SLEEP3 := 600 ; 首次开书等待时间
+    global MAP_SLEEP := 400 ; 不跨怪Map等待时间
+    global MAP_SLEEP2 := 400 ; 跨怪Map等待时间
+    global CANCEL_AND_CLICK_SLEEP := 50 ; 取消后再次点击的等待时间
+    global CRUSADE_SLEEP := 200 ; 点击讨伐后的等待时间
+    global CLICK_DOWN_SLEEP := 60 ; 长按鼠标的等待时间
+    global WHEEL_SLEEP := 100 ; 选怪时滚轮滚动等待时间
+    global SELECT_TWO_WAIT_SLEEP := 500 ; 锚点双选时的等待时间
+    global SELECT_TWO_CLICK_SLEEP := 160 ; 锚点双选时点击后的等待时间
+    global DIRECT_TP_SLEEP := 90 ; 快传等待时间
+    global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
+    global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
 } else if (tpSpeed = 3) {
+    global BUTTON_SLEEP := 80 ; 点击按钮的延时
     global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
     global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
     global BOOK_SLEEP3 := 600 ; 首次开书等待时间
     global MAP_SLEEP := 300 ; 不跨怪Map等待时间
     global MAP_SLEEP2 := 350 ; 跨怪Map等待时间
+    global CANCEL_AND_CLICK_SLEEP := 50 ; 取消后再次点击的等待时间
+    global CRUSADE_SLEEP := 200 ; 点击讨伐后的等待时间
+    global CLICK_DOWN_SLEEP := 60 ; 长按鼠标的等待时间
+    global WHEEL_SLEEP := 100 ; 选怪时滚轮滚动等待时间
+    global SELECT_TWO_WAIT_SLEEP := 500 ; 锚点双选时的等待时间
+    global SELECT_TWO_CLICK_SLEEP := 160 ; 锚点双选时点击后的等待时间
+    global DIRECT_TP_SLEEP := 90 ; 快传等待时间
+    global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
+    global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
 }
+
+global debugMode := false ; 是否开启debug模式进行路线标点

@@ -50,12 +50,20 @@ if (SCREEN = "25K") {
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
-
 global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
 global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
 global BOOK_SLEEP3 := 600 ; 首次开书等待时间
 global MAP_SLEEP := 300 ; 不跨怪Map等待时间
 global MAP_SLEEP2 := 350 ; 跨怪Map等待时间
+global CANCEL_AND_CLICK_SLEEP := 50 ; 取消后再次点击的等待时间
+global CRUSADE_SLEEP := 200 ; 点击讨伐后的等待时间
+global CLICK_DOWN_SLEEP := 60 ; 长按鼠标的等待时间
+global WHEEL_SLEEP := 100 ; 选怪时滚轮滚动等待时间
+global SELECT_TWO_WAIT_SLEEP := 500 ; 锚点双选时的等待时间
+global SELECT_TWO_CLICK_SLEEP := 160 ; 锚点双选时点击后的等待时间
+global DIRECT_TP_SLEEP := 90 ; 快传等待时间
+global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
+global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
 
 SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 #HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
@@ -153,6 +161,9 @@ executeStep(step, routeIndex) {
     if (HasProp(step, "wait")) {
         wait := step.wait
     }
+    if (HasProp(step, "selectionWait")) {
+        selectionWait := step.selectionWait
+    }
 
     if (is2K) {
         x := step.pos2K[1]
@@ -184,33 +195,33 @@ executeStep(step, routeIndex) {
     if (crusade) {
         DllCall("SetCursorPos", "int", crusadePos[1], "int", crusadePos[2])
         Send "{Click}"
-        Sleep 200
+        Sleep CRUSADE_SLEEP
         crusade := false
     }
 
     if (!sameMonster) {
         DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
         SendInput "{LButton down}"
-        Sleep 60
+        Sleep CLICK_DOWN_SLEEP
         SendInput "{LButton up}"
         wheel := (row - 1) * rowWheelNum
         LOOP wheel {
             Send "{WheelDown}"
         }
-        Sleep 100
+        Sleep WHEEL_SLEEP
 
         map := monsterColumnPos
         monsterPosX := map[column]
         DllCall("SetCursorPos", "int", monsterPosX, "int", monsterRowPos)
         Send "{Click}"
-        Sleep 60
+        Sleep BUTTON_SLEEP
     }
 
     ; 追踪怪
     DllCall("SetCursorPos", "int", trackMonsterPos[1], "int", trackMonsterPos[2])
     if (sameMonster) {
         Send "{Click}"
-        Sleep 50
+        Sleep CANCEL_AND_CLICK_SLEEP
         Send "{Click}"
         Sleep MAP_SLEEP
     } else {
@@ -227,6 +238,10 @@ executeStep(step, routeIndex) {
         Sleep BUTTON_SLEEP
     }
 
+    if (selectionWait != 0) {
+        Sleep selectionWait
+    }
+
     ; 点击传送锚点
     DllCall("SetCursorPos", "int", x, "int", y)
     Send "{Click}"
@@ -234,7 +249,7 @@ executeStep(step, routeIndex) {
     if (wait != 0) {
         Sleep wait
     } else if (selectX != 0 && selectY != 0) {
-        Sleep 500
+        Sleep SELECT_TWO_WAIT_SLEEP
     } else {
         Sleep BUTTON_SLEEP
     }
@@ -242,7 +257,7 @@ executeStep(step, routeIndex) {
     if (selectX != 0 && selectY != 0) {
         DllCall("SetCursorPos", "int", selectX, "int", selectY)
         Send "{Click}"
-        Sleep 160
+        Sleep SELECT_TWO_CLICK_SLEEP
     }
 
     ; 确认传送
@@ -254,13 +269,13 @@ executeStep(step, routeIndex) {
     if (HasProp(step, "try")) {
         DllCall("SetCursorPos", "int", x, "int", y)
         Send "{Click}"
-        Sleep 500
+        Sleep SELECT_TWO_WAIT_SLEEP
 
         selectX := selection[1][1]
         selectY := selection[1][2]
         DllCall("SetCursorPos", "int", selectX, "int", selectY)
         Send "{Click}"
-        Sleep 160
+        Sleep SELECT_TWO_CLICK_SLEEP
 
         ; 确认传送
         DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
@@ -288,7 +303,7 @@ XButton1::
         if (!quickPickPause) {
             SendInput "{Blind}f"
             Send "{WheelDown}"
-            Loop 5 {
+            Loop QUICK_PICK_SLEEP {
                 Sleep 1
                 if (GetKeyState("Shift", "P") || GetKeyState("Enter", "P") || GetKeyState("Esc", "P") || GetKeyState("Alt", "P")) {
                     autoPick := false
@@ -309,11 +324,11 @@ XButton2::
 {
     Send "{Click}"
     MouseGetPos &xpos, &ypos
-    Sleep 90
+    Sleep DIRECT_TP_SLEEP
     MouseGetPos &xpos, &ypos
     DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
     Send "{Click}"
-    Sleep 80
+    Sleep DIRECT_TP_BACK_SLEEP
     DllCall("SetCursorPos", "int", xpos, "int", ypos)
 }
 
