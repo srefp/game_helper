@@ -19,6 +19,9 @@ if (screenWidth = 1920 && screenHeight = 1080) {
 } else if (screenWidth = 2560 && screenHeight = 1440) {
     SCREEN := "2K"
     ToolTip "当前为2K的屏幕，已为您自动切换到2K自动传送！"
+} else if (screenWidth = 2560 && screenHeight = 1600) {
+    SCREEN := "25K"
+    ToolTip "当前为2.5K的屏幕，已为您自动切换到2.5K自动传送！"
 } else {
     ToolTip "未检测到您当前的屏幕分辨率，或暂不支持您的屏幕分辨率。"
 }
@@ -33,6 +36,17 @@ if (SCREEN = "2K") {
     trackMonsterPos := [1913, 1120]
     confirmPos := [2255, 1347]
     selection := [[1908, 976]]
+}
+
+if (SCREEN = "25K") {
+    crusadePos := [393, 800]
+    clearWheelPos := [1274, 461]
+    monsterColumnPos := [660, 900, 1140]
+    monsterRowPos := 544
+    rowWheelNum := 9
+    trackMonsterPos := [1909, 1201]
+    confirmPos := [2238, 1497]
+    selection := [[1858, 1134]]
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
@@ -108,10 +122,15 @@ executeStep(step, routeIndex) {
     wait := 0
 
     is2K := SCREEN = "2K"
+    is25K := SCREEN = "25K"
 
     if (is2K) {
         if (HasProp(step, "movX2K")) {
             movX := step.movX2K
+        }
+    } else if (is25K) {
+        if (HasProp(step, "movX25K")) {
+            movX := step.movX25K
         }
     } else if (HasProp(step, "movX")) {
         movX := step.movX
@@ -119,6 +138,10 @@ executeStep(step, routeIndex) {
     if (is2K) {
         if (HasProp(step, "movY2K")) {
             movY := step.movY2K
+        }
+    } else if (is25K) {
+        if (HasProp(step, "movY25K")) {
+            movX := step.movY25K
         }
     } else if (HasProp(step, "movY")) {
         movY := step.movY
@@ -134,6 +157,9 @@ executeStep(step, routeIndex) {
     if (is2K) {
         x := step.pos2K[1]
         y := step.pos2K[2]
+    } else if (is25K) {
+        x := step.pos25K[1]
+        y := step.pos25K[2]
     } else {
         x := step.pos[1]
         y := step.pos[2]
