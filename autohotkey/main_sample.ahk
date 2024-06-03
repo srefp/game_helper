@@ -27,8 +27,25 @@ global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计�
 
 #Include "./hotkey.ahk" ; 引入快捷键文件
 
-global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
-global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
-global BOOK_SLEEP3 := 600 ; 首次开书等待时间
-global MAP_SLEEP := 300 ; 不跨怪Map等待时间
-global MAP_SLEEP2 := 350 ; 跨怪Map等待时间
+; 3 - 最快，2 - 中等，1 - 慢
+global tpSpeed := 1
+
+if (tpSpeed = 2) {
+    global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
+    global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
+    global BOOK_SLEEP3 := 600 ; 首次开书等待时间
+    global MAP_SLEEP := 400 ; 不跨怪Map等待时间
+    global MAP_SLEEP2 := 400 ; 跨怪Map等待时间
+} else if (tpSpeed = 1) {
+    global BOOK_SLEEP := 550 ; 不跨怪开书等待时间
+    global BOOK_SLEEP2 := 700 ; 跨怪开书等待时间
+    global BOOK_SLEEP3 := 650 ; 首次开书等待时间
+    global MAP_SLEEP := 450 ; 不跨怪Map等待时间
+    global MAP_SLEEP2 := 450 ; 跨怪Map等待时间
+} else if (tpSpeed = 3) {
+    global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
+    global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
+    global BOOK_SLEEP3 := 600 ; 首次开书等待时间
+    global MAP_SLEEP := 300 ; 不跨怪Map等待时间
+    global MAP_SLEEP2 := 350 ; 跨怪Map等待时间
+}
