@@ -141,7 +141,7 @@ executeStep(step, routeIndex) {
         }
     } else if (is25K) {
         if (HasProp(step, "movY25K")) {
-            movX := step.movY25K
+            movY := step.movY25K
         }
     } else if (HasProp(step, "movY")) {
         movY := step.movY
