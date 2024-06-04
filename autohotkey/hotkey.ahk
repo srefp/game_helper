@@ -128,6 +128,7 @@ executeStep(step, routeIndex) {
     selectX := 0
     selectY := 0
     wait := 0
+    selectionWait := 0
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
