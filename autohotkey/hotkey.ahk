@@ -129,9 +129,13 @@ executeStep(step, routeIndex) {
     selectY := 0
     wait := 0
     selectionWait := 0
+    qm := true
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
+
+    ; 记录开图总时间
+    sum := 0
 
     if (is2K) {
         if (HasProp(step, "movX2K")) {
@@ -165,6 +169,9 @@ executeStep(step, routeIndex) {
     if (HasProp(step, "selectionWait")) {
         selectionWait := step.selectionWait
     }
+    if (HasProp(step, "qm")) {
+        qm := step.qm
+    }
 
     if (is2K) {
         x := step.pos2K[1]
@@ -183,13 +190,25 @@ executeStep(step, routeIndex) {
     sameMonster := prevMonster[1] = row && prevMonster[2] = column
 
     ; 开书
+    ; 开书前开大招
+    if (qm) {
+        SendInput "{Blind}w"
+        Click "Right"
+        Sleep 50
+        SendInput "{Blind}q"
+        Sleep 10
+    }
+
     Send "{F1}"
     if (crusade) {
         Sleep BOOK_SLEEP3
+        sum += BOOK_SLEEP3
     } else if (sameMonster) {
         Sleep BOOK_SLEEP
+        sum += BOOK_SLEEP
     } else {
         Sleep BOOK_SLEEP2
+        sum += BOOK_SLEEP2
     }
 
     ; 点击讨伐
@@ -197,6 +216,7 @@ executeStep(step, routeIndex) {
         DllCall("SetCursorPos", "int", crusadePos[1], "int", crusadePos[2])
         Send "{Click}"
         Sleep CRUSADE_SLEEP
+        sum += CRUSADE_SLEEP
         crusade := false
     }
 
@@ -204,18 +224,21 @@ executeStep(step, routeIndex) {
         DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
         SendInput "{LButton down}"
         Sleep CLICK_DOWN_SLEEP
+        sum += CLICK_DOWN_SLEEP
         SendInput "{LButton up}"
         wheel := (row - 1) * rowWheelNum
         LOOP wheel {
             Send "{WheelDown}"
         }
         Sleep WHEEL_SLEEP
+        sum += WHEEL_SLEEP
 
         map := monsterColumnPos
         monsterPosX := map[column]
         DllCall("SetCursorPos", "int", monsterPosX, "int", monsterRowPos)
         Send "{Click}"
         Sleep BUTTON_SLEEP
+        sum += BUTTON_SLEEP
     }
 
     ; 追踪怪
@@ -223,11 +246,14 @@ executeStep(step, routeIndex) {
     if (sameMonster) {
         Send "{Click}"
         Sleep CANCEL_AND_CLICK_SLEEP
+        sum += CANCEL_AND_CLICK_SLEEP
         Send "{Click}"
         Sleep MAP_SLEEP
+        sum += MAP_SLEEP
     } else {
         Send "{Click}"
         Sleep MAP_SLEEP2
+        sum += MAP_SLEEP2
         prevMonster[1] := row
         prevMonster[2] := column
     }
@@ -237,10 +263,12 @@ executeStep(step, routeIndex) {
         MouseGetPos &xpos, &ypos
         SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos + movX . " " . ypos + movY . " Up}"
         Sleep BUTTON_SLEEP
+        sum += BUTTON_SLEEP
     }
 
     if (selectionWait != 0) {
         Sleep selectionWait
+        sum += selectionWait
     }
 
     ; 点击传送锚点
@@ -249,17 +277,28 @@ executeStep(step, routeIndex) {
 
     if (wait != 0) {
         Sleep wait
+        sum += wait
     } else if (selectX != 0 && selectY != 0) {
         Sleep SELECT_TWO_WAIT_SLEEP
+        sum += SELECT_TWO_WAIT_SLEEP
     } else {
         Sleep BUTTON_SLEEP
+        sum += BUTTON_SLEEP
     }
 
     if (selectX != 0 && selectY != 0) {
         DllCall("SetCursorPos", "int", selectX, "int", selectY)
         Send "{Click}"
         Sleep SELECT_TWO_CLICK_SLEEP
+        sum += SELECT_TWO_CLICK_SLEEP
     }
+
+    ; 为了qm，补足整个延迟时间
+    if (sum < 1200) {
+        qmSleep := 1200 - sum
+        Sleep qmSleep
+    }
+    Tooltip sum
 
     ; 确认传送
     DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
