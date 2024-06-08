@@ -75,8 +75,11 @@ global crusade := true
 
 global tpForbidden := false
 
-Right::
-{
+; 上一次追踪的怪
+global prevMonster := [0, 0]
+
+; 传送至下一个点位
+tpNext() {
     global tpForbidden
     if (tpForbidden) {
         return
@@ -92,8 +95,8 @@ Right::
     SetTimer () => tpForbidden := false , -5000
 }
 
-Left::
-{
+; 传送至上一个点位
+tpPrev() {
     if (tpForbidden) {
         return
     }
@@ -109,9 +112,6 @@ Left::
     }
     SetTimer () => tpForbidden := false , -8000
 }
-
-; 上一次追踪的怪
-global prevMonster := [0, 0]
 
 ; 执行每一步
 executeStep(step, routeIndex) {
@@ -328,9 +328,7 @@ executeStep(step, routeIndex) {
 }
 
 ; 快速捡东西，按后退键开始咔咔乱捡，再次按后退键停止捡
-#MaxThreadsPerHotKey 3
-XButton1::
-{
+quickPick() {
     static keepF := false
     if (keepF) {
         keepF := false
@@ -357,11 +355,9 @@ XButton1::
     }
     keepF := false
 }
-#MaxThreadsPerHotKey 1
 
 ; 快速传送，按前进键直接传送
-XButton2::
-{
+quickTp() {
     Send "{Click}"
     MouseGetPos &xpos, &ypos
     Sleep DIRECT_TP_SLEEP
@@ -381,8 +377,7 @@ FileEncoding "UTF-8"
 global gamingStartTime := A_Now
 
 ; 计时
-Down::
-{
+startTiming() {
     global timingIsStart, gamingStartTime
     curTime := A_Now
     curTimeStr := FormatTime(curTime, "yyyy-MM-dd HH:mm:ss")
@@ -404,8 +399,7 @@ Down::
 }
 
 ; 显示当前坐标
-Up::
-{
+showCoord() {
     if (debugMode) {
         MouseGetPos &xpos, &ypos
         posText := "" . xpos . ", " . ypos

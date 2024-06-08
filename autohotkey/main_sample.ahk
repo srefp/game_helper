@@ -32,6 +32,28 @@ global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计�
 ; 3 最快
 global tpSpeed := 1
 
+#MaxThreadsPerHotKey 3
+XButton1::{
+    quickPick()
+}
+
+#MaxThreadsPerHotKey 1
+Right::{
+    tpNext()
+}
+Left::{
+    tpPrev()
+}
+Up::{
+    showCoord()
+}
+Down::{
+    startTiming()
+}
+XButton2::{
+    quickTp()
+}
+
 if (tpSpeed = 1) {
     global BUTTON_SLEEP := 80 ; 点击按钮的延时
     global BOOK_SLEEP := 550 ; 不跨怪开书等待时间
