@@ -298,7 +298,6 @@ executeStep(step, routeIndex) {
         qmSleep := 1200 - sum
         Sleep qmSleep
     }
-    Tooltip sum
 
     ; 确认传送
     DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
@@ -420,5 +419,35 @@ showCoord() {
             }
         }
         SetTimer () => ToolTip(), -5000
+    }
+}
+
+; 速射
+aarr() {
+    static keepAttack := false
+    if (keepAttack) {
+        keepAttack := false
+        return
+    }
+    keepAttack := true
+    Loop 6 {
+        Click
+        Sleep 60
+    }
+
+    Loop 10 {
+        SendInput "{Blind}w"
+        Sleep 60
+        Click
+        Sleep 200
+        Click
+        Sleep 250
+        SendInput "{Blind}r"
+        Sleep 80
+        SendInput "{Blind}r"
+        Sleep 100
+        if (!keepAttack) {
+            break
+        }
     }
 }

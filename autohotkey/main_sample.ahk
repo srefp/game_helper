@@ -19,7 +19,7 @@
 ;   2、默认第一个点位需要手动传送过去，如果是自己开地，将routeIndex改为0，从而传送到第一个点位。
 
 #Include "./route/-6.ahk" ; 引入路线文件
-global routeIndex := 1 ; 路线开始的点位 0表示带起点，1表示忽略起点
+global routeIndex := 1 ; 路线开始的点位 - 1，设置为29可直达传奇，地主设置为0，到别人世界设置为1
 global hintEnabled := false ; 是否开启提示
 
 global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
@@ -30,29 +30,18 @@ global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计�
 ; 1 慢
 ; 2 中等
 ; 3 最快
-global tpSpeed := 1
+global tpSpeed := 3
 
 #MaxThreadsPerHotKey 3
-XButton1::{
-    quickPick()
-}
+XButton1::quickPick()
+MButton::aarr()
 
 #MaxThreadsPerHotKey 1
-Right::{
-    tpNext()
-}
-Left::{
-    tpPrev()
-}
-Up::{
-    showCoord()
-}
-Down::{
-    startTiming()
-}
-XButton2::{
-    quickTp()
-}
+Right::tpNext()
+Left::tpPrev()
+Up::showCoord()
+Down::startTiming()
+XButton2::quickTp()
 
 if (tpSpeed = 1) {
     global BUTTON_SLEEP := 80 ; 点击按钮的延时
