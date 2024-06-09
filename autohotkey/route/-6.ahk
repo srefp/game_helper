@@ -29,6 +29,6 @@ global routes := [
     {monster: [4, 1], pos: [1504, 503], select: 2, pos2K: [2004, 672], pos25K: [2085, 743]}, ; 28
     {monster: [5, 2], pos: [954, 597], pos2K: [1272, 794], pos25K: [1272, 882], qm: false}, ; 29
     ; 带传奇
-    {monster: [9, 1], pos: [1460, 430], pos2K: [1949, 577], pos25K: []}, ; 30
+    {monster: [9, 1], pos: [1460, 430], pos2K: [1949, 577], pos25K: [], qm: false}, ; 30
     {monster: [10, 3], pos: [1195, 420], pos2K: [1592, 562], pos25K: []}, ; 31 龙蜥
 ]
