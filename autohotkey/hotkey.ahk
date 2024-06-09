@@ -130,6 +130,7 @@ executeStep(step, routeIndex) {
     wait := 0
     selectionWait := 0
     qm := true
+    wheel := 0
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
@@ -171,6 +172,9 @@ executeStep(step, routeIndex) {
     }
     if (HasProp(step, "qm")) {
         qm := step.qm
+    }
+    if (HasProp(step, "wheel")) {
+        wheel := step.wheel
     }
 
     if (is2K) {
@@ -226,8 +230,8 @@ executeStep(step, routeIndex) {
         Sleep CLICK_DOWN_SLEEP
         sum += CLICK_DOWN_SLEEP
         SendInput "{LButton up}"
-        wheel := (row - 1) * rowWheelNum
-        LOOP wheel {
+        monsterWheel := (row - 1) * rowWheelNum
+        LOOP monsterWheel {
             Send "{WheelDown}"
         }
         Sleep WHEEL_SLEEP
@@ -266,6 +270,20 @@ executeStep(step, routeIndex) {
         sum += BUTTON_SLEEP
     }
 
+    if (wheel != 0) {
+        if (wheel > 0) {
+            Loop wheel {
+                Send "{WheelDown}"
+            }
+        } else {
+            Loop -wheel {
+                Send "{WheelUp}"
+            }
+        }
+    }
+    Sleep WHEEL_SLEEP
+    sum += WHEEL_SLEEP
+
     if (selectionWait != 0) {
         Sleep selectionWait
         sum += selectionWait
@@ -285,6 +303,20 @@ executeStep(step, routeIndex) {
         Sleep BUTTON_SLEEP
         sum += BUTTON_SLEEP
     }
+
+    if (wheel != 0) {
+        if (wheel > 0) {
+            Loop wheel {
+                Send "{WheelUp}"
+            }
+        } else {
+            Loop -wheel {
+                Send "{WheelDown}"
+            }
+        }
+    }
+    Sleep WHEEL_SLEEP
+    sum += WHEEL_SLEEP
 
     if (selectX != 0 && selectY != 0) {
         DllCall("SetCursorPos", "int", selectX, "int", selectY)
