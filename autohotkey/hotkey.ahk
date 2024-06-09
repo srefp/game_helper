@@ -66,6 +66,10 @@ global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
 global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
 
 SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
+
+; 关闭进程名为Snipaste.exe的程序
+ProcessClose "Snipaste.exe"
+
 #HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
@@ -74,6 +78,8 @@ global quickPickPause := false
 global crusade := true
 
 global tpForbidden := false
+global fastMode := false
+global qmMode := false
 
 ; 上一次追踪的怪
 global prevMonster := [0, 0]
@@ -118,6 +124,8 @@ executeStep(step, routeIndex) {
     global quickPickPause
     global prevMonster
     global crusade
+    global fastMode
+    global qmMode
 
     ; 暂停快捡
     quickPickPause := true
@@ -131,6 +139,9 @@ executeStep(step, routeIndex) {
     selectionWait := 0
     qm := true
     wheel := 0
+    x := 0
+    y := 0
+    pointFast := false
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
@@ -173,19 +184,40 @@ executeStep(step, routeIndex) {
     if (HasProp(step, "qm")) {
         qm := step.qm
     }
-    if (HasProp(step, "wheel")) {
-        wheel := step.wheel
-    }
 
     if (is2K) {
-        x := step.pos2K[1]
-        y := step.pos2K[2]
+        if (fastMode && HasProp(step, "fastPos2K")) {
+            x := step.fastPos2K[1]
+            y := step.fastPos2K[2]
+            pointFast := true
+        } else {
+            x := step.pos2K[1]
+            y := step.pos2K[2]
+        }
     } else if (is25K) {
-        x := step.pos25K[1]
-        y := step.pos25K[2]
+        if (fastMode && HasProp(step, "fastPos25K")) {
+            x := step.fastPos25K[1]
+            y := step.fastPos25K[2]
+            pointFast := true
+        } else {
+            x := step.pos25K[1]
+            y := step.pos25K[2]
+        }
     } else {
-        x := step.pos[1]
-        y := step.pos[2]
+        if (fastMode && HasProp(step, "fastPos")) {
+            x := step.fastPos[1]
+            y := step.fastPos[2]
+            pointFast := true
+        } else {
+            x := step.pos[1]
+            y := step.pos[2]
+        }
+    }
+
+    if (fastMode && pointFast && HasProp(step, "fastWheel")) {
+        wheel := step.fastWheel
+    } else if (!pointFast && HasProp(step, "wheel")) {
+        wheel := step.wheel
     }
 
     row := step.monster[1]
@@ -195,7 +227,7 @@ executeStep(step, routeIndex) {
 
     ; 开书
     ; 开书前开大招
-    if (qm) {
+    if (qmMode && qm) {
         SendInput "{Blind}w"
         Click "Right"
         Sleep 50
@@ -203,63 +235,69 @@ executeStep(step, routeIndex) {
         Sleep 10
     }
 
-    Send "{F1}"
-    if (crusade) {
-        Sleep BOOK_SLEEP3
-        sum += BOOK_SLEEP3
-    } else if (sameMonster) {
-        Sleep BOOK_SLEEP
-        sum += BOOK_SLEEP
+    if (fastMode && pointFast) {
+        Send "{LShift down}"
+        Sleep 500
+        Send "{LShift up}"
     } else {
-        Sleep BOOK_SLEEP2
-        sum += BOOK_SLEEP2
-    }
-
-    ; 点击讨伐
-    if (crusade) {
-        DllCall("SetCursorPos", "int", crusadePos[1], "int", crusadePos[2])
-        Send "{Click}"
-        Sleep CRUSADE_SLEEP
-        sum += CRUSADE_SLEEP
-        crusade := false
-    }
-
-    if (!sameMonster) {
-        DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
-        SendInput "{LButton down}"
-        Sleep CLICK_DOWN_SLEEP
-        sum += CLICK_DOWN_SLEEP
-        SendInput "{LButton up}"
-        monsterWheel := (row - 1) * rowWheelNum
-        LOOP monsterWheel {
-            Send "{WheelDown}"
+       Send "{F1}"
+        if (crusade) {
+            Sleep BOOK_SLEEP3
+            sum += BOOK_SLEEP3
+        } else if (sameMonster) {
+            Sleep BOOK_SLEEP
+            sum += BOOK_SLEEP
+        } else {
+            Sleep BOOK_SLEEP2
+            sum += BOOK_SLEEP2
         }
-        Sleep WHEEL_SLEEP
-        sum += WHEEL_SLEEP
 
-        map := monsterColumnPos
-        monsterPosX := map[column]
-        DllCall("SetCursorPos", "int", monsterPosX, "int", monsterRowPos)
-        Send "{Click}"
-        Sleep BUTTON_SLEEP
-        sum += BUTTON_SLEEP
-    }
+        ; 点击讨伐
+        if (crusade) {
+            DllCall("SetCursorPos", "int", crusadePos[1], "int", crusadePos[2])
+            Send "{Click}"
+            Sleep CRUSADE_SLEEP
+            sum += CRUSADE_SLEEP
+            crusade := false
+        }
 
-    ; 追踪怪
-    DllCall("SetCursorPos", "int", trackMonsterPos[1], "int", trackMonsterPos[2])
-    if (sameMonster) {
-        Send "{Click}"
-        Sleep CANCEL_AND_CLICK_SLEEP
-        sum += CANCEL_AND_CLICK_SLEEP
-        Send "{Click}"
-        Sleep MAP_SLEEP
-        sum += MAP_SLEEP
-    } else {
-        Send "{Click}"
-        Sleep MAP_SLEEP2
-        sum += MAP_SLEEP2
-        prevMonster[1] := row
-        prevMonster[2] := column
+        if (!sameMonster) {
+            DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
+            SendInput "{LButton down}"
+            Sleep CLICK_DOWN_SLEEP
+            sum += CLICK_DOWN_SLEEP
+            SendInput "{LButton up}"
+            monsterWheel := (row - 1) * rowWheelNum
+            LOOP monsterWheel {
+                Send "{WheelDown}"
+            }
+            Sleep WHEEL_SLEEP
+            sum += WHEEL_SLEEP
+
+            map := monsterColumnPos
+            monsterPosX := map[column]
+            DllCall("SetCursorPos", "int", monsterPosX, "int", monsterRowPos)
+            Send "{Click}"
+            Sleep BUTTON_SLEEP
+            sum += BUTTON_SLEEP
+        }
+
+        ; 追踪怪
+        DllCall("SetCursorPos", "int", trackMonsterPos[1], "int", trackMonsterPos[2])
+        if (sameMonster) {
+            Send "{Click}"
+            Sleep CANCEL_AND_CLICK_SLEEP
+            sum += CANCEL_AND_CLICK_SLEEP
+            Send "{Click}"
+            Sleep MAP_SLEEP
+            sum += MAP_SLEEP
+        } else {
+            Send "{Click}"
+            Sleep MAP_SLEEP2
+            sum += MAP_SLEEP2
+            prevMonster[1] := row
+            prevMonster[2] := column
+        }
     }
 
     ; 拖动
@@ -326,7 +364,7 @@ executeStep(step, routeIndex) {
     }
 
     ; 为了qm，补足整个延迟时间
-    if (sum < 1200) {
+    if (qmMode && sum < 1200) {
         qmSleep := 1200 - sum
         Sleep qmSleep
     }

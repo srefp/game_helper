@@ -43,6 +43,12 @@ Up::showCoord()
 Down::startTiming()
 XButton2::quickTp()
 
+global debugMode := true ; 是否开启debug模式
+
+global fastMode := true ; 是否开启超快模式
+
+global qmMode := false ; 是否开启qm
+
 if (tpSpeed = 1) {
     global BUTTON_SLEEP := 80 ; 点击按钮的延时
     global BOOK_SLEEP := 550 ; 不跨怪开书等待时间
