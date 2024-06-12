@@ -45,9 +45,9 @@ XButton2::quickTp()
 
 global debugMode := true ; 是否开启debug模式
 
-global fastMode := true ; 是否开启超快模式
+global fastMode := false ; 是否开启超快模式
 
-global qmMode := false ; 是否开启qm
+global qmMode := false ; 是否开启qm模式
 
 if (tpSpeed = 1) {
     global BUTTON_SLEEP := 80 ; 点击按钮的延时
@@ -98,5 +98,3 @@ if (tpSpeed = 1) {
     global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
     global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
 }
-
-global debugMode := false ; 是否开启debug模式进行路线标点
