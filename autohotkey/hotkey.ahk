@@ -70,7 +70,7 @@ SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 ; 关闭进程名为Snipaste.exe的程序
 ProcessClose "Snipaste.exe"
 
-#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
+;#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
 ProcessSetPriority "High" ; 高优先模式
@@ -263,10 +263,10 @@ executeStep(step, routeIndex) {
 
         if (!sameMonster) {
             DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
-            SendInput "{LButton down}"
+            Send "{LButton down}"
             Sleep CLICK_DOWN_SLEEP
             sum += CLICK_DOWN_SLEEP
-            SendInput "{LButton up}"
+            Send "{LButton up}"
             monsterWheel := (row - 1) * rowWheelNum
             LOOP monsterWheel {
                 Send "{WheelDown}"
