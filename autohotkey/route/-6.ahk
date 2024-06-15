@@ -1,10 +1,10 @@
 global routes := [
-    {monster: [6, 1], pos: [157, 758], name: "渊下宫1", pos2K: [209, 1015], pos25K: [6, 1326], wheel: 30}, ; 1
-    {monster: [6, 1], pos: [563, 202], name: "渊下宫2", pos2K: [753, 272], pos25K: [698, 298], fastWheel: 30, fastPos2K: [1929, 106]}, ; 2 1929, 106
-    {monster: [6, 1], pos: [1536, 241], name: "渊下宫3", pos2K: [2045, 326], pos25K: [2126, 359], fastPos2K: [2016, 801]}, ; 3
-    {monster: [6, 1], pos: [1500, 571], name: "渊下宫4", pos2K: [2004, 761], pos25K: [2080, 839], fastPos2K: [1495, 919]}, ; 4
-    {monster: [6, 1], pos: [820, 1010], name: "渊下宫5", pos2K: [1094, 1346], pos25K: [1033, 1452], wheel: 10, fastPos2K: [903, 1223]}, ; 5
-    {monster: [6, 2], pos: [1053, 264], name: "层岩1", pos2K: [1405, 353], pos25K: [1418, 390], qm: false}, ; 6 -> 层岩
+    {monster: [6, 1], pos: [157, 758], pos2K: [209, 1015], pos25K: [6, 1326], wheel: 30}, ; 1
+    {monster: [6, 1], pos: [563, 202], pos2K: [753, 272], pos25K: [698, 298], fastWheel: 30, fastPos2K: [1929, 106]}, ; 2 1929, 106
+    {monster: [6, 1], pos: [1536, 241], pos2K: [2045, 326], pos25K: [2126, 359], fastPos2K: [2016, 801]}, ; 3
+    {monster: [6, 1], pos: [1500, 571], pos2K: [2004, 761], pos25K: [2080, 839], fastPos2K: [1495, 919]}, ; 4
+    {monster: [6, 1], pos: [820, 1010], pos2K: [1094, 1346], pos25K: [1033, 1452], wheel: 10, fastPos2K: [903, 1223]}, ; 5
+    {monster: [6, 2], pos: [1053, 264], pos2K: [1405, 353], pos25K: [1418, 390], qm: false}, ; 6 -> 层岩
     {monster: [6, 2], pos: [1065, 498], pos2K: [1414, 666], pos25K: [1430, 740], fastPos2K: [1222, 1083], selectionWait: 120}, ; 7
     {monster: [6, 2], pos: [1065, 498], pos2K: [1414, 666], pos25K: [1430, 740], fastPos2K: [1437, 772]}, ; 8
     {monster: [6, 2], pos: [1140, 899], pos2K: [1522, 1199], pos25K: [1547, 1332], fastPos2K: [1418, 1205]}, ; 9

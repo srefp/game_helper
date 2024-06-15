@@ -70,7 +70,7 @@ SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 ; 关闭进程名为Snipaste.exe的程序
 ProcessClose "Snipaste.exe"
 
-;#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
+#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
 ProcessSetPriority "High" ; 高优先模式
@@ -240,7 +240,7 @@ executeStep(step, routeIndex) {
         Sleep 500
         Send "{LShift up}"
     } else {
-       Send "{F1}"
+        Send "{F1}"
         if (crusade) {
             Sleep BOOK_SLEEP3
             sum += BOOK_SLEEP3
