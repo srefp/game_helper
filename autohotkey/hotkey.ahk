@@ -228,10 +228,10 @@ executeStep(step, routeIndex) {
     ; 开书
     ; 开书前开大招
     if (qmMode && qm) {
-        SendInput "{Blind}w"
+        Send "{Blind}w"
         Click "Right"
         Sleep 50
-        SendInput "{Blind}q"
+        Send "{Blind}q"
         Sleep 10
     }
 
@@ -408,7 +408,7 @@ quickPick() {
     while autoPick
     {
         if (!quickPickPause) {
-            SendInput "{Blind}f"
+            Send "{Blind}f"
             Send "{WheelDown}"
             Loop QUICK_PICK_SLEEP {
                 Sleep 1
@@ -506,15 +506,15 @@ aarr() {
     }
 
     Loop 10 {
-        SendInput "{Blind}w"
+        Send "{Blind}w"
         Sleep 60
         Click
         Sleep 200
         Click
         Sleep 250
-        SendInput "{Blind}r"
+        Send "{Blind}r"
         Sleep 80
-        SendInput "{Blind}r"
+        Send "{Blind}r"
         Sleep 100
         if (!keepAttack) {
             break

@@ -7,5 +7,17 @@ global routes := [
     {monster: [4, 1], pos: [], name: "刀车6", pos2K: [2077, 349]}, ; 6
     {monster: [4, 1], pos: [], name: "刀车7", pos2K: [2077, 349]}, ; 7
     {monster: [4, 1], pos: [], select: 2, name: "刀车8", pos2K: [2290, 548]}, ; 8
-
+    {monster: [4, 1], pos: [], select: 2, name: "刀车9", pos2K: [2066, 655]}, ; 9
+    {monster: [4, 1], pos: [], name: "刀车10", pos2K: [1885, 431]}, ; 10
+    {monster: [4, 1], pos: [], name: "刀车11", pos2K: [1452, 362]}, ; 11
+    {monster: [4, 1], pos: [], name: "刀车12", pos2K: [1166, 502]}, ; 12
+    {monster: [4, 1], pos: [], name: "刀车13", pos2K: [1166, 502]}, ; 13
+    {monster: [4, 1], pos: [], name: "刀车14", pos2K: [1304, 573]}, ; 14
+    {monster: [4, 1], pos: [], name: "刀车15", pos2K: [1176, 772]}, ; 15
+    {monster: [4, 1], pos: [], name: "刀车16", pos2K: [1327, 887]}, ; 16
+    {monster: [5, 2], pos: [], name: "刀车17", pos2K: [951, 439]}, ; 17
+    {monster: [5, 2], pos: [], name: "刀车18", pos2K: [1444, 340]}, ; 18
+;    {monster: [5, 2], pos: [], name: "刀车19", pos2K: [1195, 596]}, ; 19 （其余点）
+    {monster: [5, 2], pos: [], name: "刀车19", pos2K: [1474, 603]}, ; 19 （温迪点）
+    {monster: [5, 2], pos: [], name: "刀车20", pos2K: [1474, 603]}, ; 20
 ]
