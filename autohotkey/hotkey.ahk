@@ -343,6 +343,8 @@ executeStep(step, routeIndex) {
     }
 
     if (wheel != 0) {
+        DllCall("SetCursorPos", "int", 0, "int", 0)
+        Sleep 10
         if (wheel > 0) {
             Loop wheel {
                 Send "{WheelUp}"

@@ -1,7 +1,7 @@
 global routes := [
     {monster: [6, 1], pos: [157, 758], pos2K: [209, 1015], pos25K: [6, 1326], wheel: 30}, ; 1
-    {monster: [6, 1], pos: [563, 202], pos2K: [753, 272], pos25K: [698, 298], fastWheel: 30, fastPos2K: [1929, 106]}, ; 2 1929, 106
-    {monster: [6, 1], pos: [1536, 241], pos2K: [2045, 326], pos25K: [2126, 359], fastPos2K: [2016, 801]}, ; 3
+    {monster: [6, 1], pos: [563, 202], pos2K: [753, 272], pos25K: [698, 298], fastWheel: 30, fastPos2K: [1930, 108]}, ; 2 1929, 106
+    {monster: [6, 1], pos: [1536, 241], pos2K: [2045, 326], pos25K: [2126, 359], fastPos2K: [2464, 840]}, ; 3
     {monster: [6, 1], pos: [1500, 571], pos2K: [2004, 761], pos25K: [2080, 839], fastPos2K: [1495, 919]}, ; 4
     {monster: [6, 1], pos: [820, 1010], pos2K: [1094, 1346], pos25K: [1033, 1452], wheel: 10, fastPos2K: [903, 1223]}, ; 5
     {monster: [6, 2], pos: [1053, 264], pos2K: [1405, 353], pos25K: [1418, 390], qm: false}, ; 6 -> 层岩
@@ -17,7 +17,7 @@ global routes := [
     {monster: [10, 3], pos: [961, 648], pos2K: [1285, 846], pos25K: [1285, 963]}, ; 16
     {monster: [10, 3], pos: [1590, 442], pos2K: [2119, 587], pos25K: [2214, 652], try: 2}, ; 17
     {monster: [7, 1], pos: [1315, 1019], wait: 100, pos2K: [1754, 1356], pos25K: [1803, 1507]}, ; 18 -> 须弥鸡哥
-    {monster: [7, 1], pos: [921, 579], pos2K: [1232, 769], pos25K: [1226, 852], try: 2, qm: false}, ; 19
+    {monster: [7, 1], pos: [921, 579], pos2K: [1232, 769], pos25K: [1226, 852], select: 2, qm: false}, ; 19
     {monster: [7, 1], pos: [187, 587], pos2K: [251, 788], pos25K: [248, 895], wheel: 10}, ; 20
     {monster: [7, 1], pos: [94, 800], pos2K: [124, 1070], pos25K: [3, 1183]}, ; 21
     {monster: [7, 1], pos: [851, 948], pos2K: [1134, 1270], pos25K: [1115, 1403], qm: false}, ; 22
