@@ -485,9 +485,9 @@ showCoord() {
         } else {
             route := routes[routeIndex]
             if (HasProp(route, "name")) {
-                ToolTip "当前是第" . (routeIndex + 1) . "个点位：" . route.name . "。"
+                ToolTip "当前是第" . routeIndex . "个点位：" . route.name . "。"
             } else {
-                ToolTip "当前是第" . (routeIndex + 1) . "个点位。"
+                ToolTip "当前是第" . routeIndex . "个点位。"
             }
         }
         SetTimer () => ToolTip(), -5000

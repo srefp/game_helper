@@ -1,7 +1,7 @@
 global routes := [
     {monster: [6, 3], pos: [765, 332]}, ; 1
     {monster: [6, 3], pos: [772, 468]}, ; 2
-    {monster: [6, 3], pos: [422, 693]}, ; 3
+    {monster: [6, 3], pos: [424, 499]}, ; 3
     {monster: [6, 3], pos: [210, 695]}, ; 4
     {monster: [7, 1], pos: [921, 579], select: 2}, ; 5
     {monster: [7, 1], pos: [1151, 996]}, ; 6
