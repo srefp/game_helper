@@ -73,7 +73,7 @@ ProcessClose "Snipaste.exe"
 #HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
-ProcessSetPriority "High" ; 高优先模式
+ProcessSetPriority "Low" ; 低优先模式
 global quickPickPause := false
 global crusade := true
 
@@ -494,6 +494,27 @@ showCoord() {
     }
 }
 
+; 快速吃药
+eatFood() {
+    global foodList
+    global confirmPos
+    ; 开背包
+    sendInput "{Blind}b"
+    ; 点击食物
+    for (food in foodList) {
+        DllCall("SetCursorPos", "int", food[1], "int", food[2])
+        Send "{Click}"
+        Sleep BUTTON_SLEEP
+
+        ; 确认
+        DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
+        Send "{Click}"
+        Sleep BUTTON_SLEEP
+    }
+    ; 关闭背包
+    sendInput "{Blind}b"
+}
+
 ; 速射
 aarr() {
     static keepAttack := false
@@ -502,12 +523,12 @@ aarr() {
         return
     }
     keepAttack := true
-    Loop 6 {
-        Click
-        Sleep 60
-    }
+;    Loop 6 {
+;        Click
+;        Sleep 60
+;    }
 
-    Loop 10 {
+    Loop 40 {
         Send "{Blind}w"
         Sleep 60
         Click
