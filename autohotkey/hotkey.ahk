@@ -494,6 +494,8 @@ showCoord() {
     }
 }
 
+global food := [1149, 66]
+
 ; 快速吃药
 eatFood() {
     global foodList
