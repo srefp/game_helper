@@ -1,6 +1,16 @@
-Sleep 3000
+#MaxThreadsPerHotKey 3
+XButton2::click()
+space::click()
 
-Loop 1000000 {
-    Send "{Click}"
-    Sleep 200
+click() {
+    static keepClicking := false
+    if (keepClicking) {
+        keepClicking := false
+        return
+    }
+    keepClicking := true
+    while keepClicking {
+        Send "{Click}"
+        Sleep 100
+    }
 }
