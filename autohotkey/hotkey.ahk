@@ -7,6 +7,7 @@ global rowWheelNum := 9 ; 滚动一行需要的滚轮数
 global trackMonsterPos := [1460, 840] ; 追踪怪的位置
 global confirmPos := [1678, 1005] ; 确认按钮的位置
 global selection := [[1370, 734]] ; 点击锚点时多选按钮的位置
+global foodPos := []
 
 screenWidth := A_ScreenWidth
 screenHeight := A_ScreenHeight
@@ -36,6 +37,7 @@ if (SCREEN = "2K") {
     trackMonsterPos := [1913, 1120]
     confirmPos := [2255, 1347]
     selection := [[1908, 976]]
+    foodPos := [1149, 69]
 }
 
 if (SCREEN = "25K") {
@@ -47,6 +49,7 @@ if (SCREEN = "25K") {
     trackMonsterPos := [1909, 1201]
     confirmPos := [2238, 1497]
     selection := [[1858, 1134]]
+    foodPos := []
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
@@ -64,6 +67,7 @@ global SELECT_TWO_CLICK_SLEEP := 160 ; 锚点双选时点击后的等待时间
 global DIRECT_TP_SLEEP := 90 ; 快传等待时间
 global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
 global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
+global BACK_SLEEP := 400 ; 开背包的延迟
 
 SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 
@@ -494,7 +498,7 @@ showCoord() {
     }
 }
 
-global food := [1149, 66]
+global foodList := []
 
 ; 快速吃药
 eatFood() {
@@ -502,7 +506,11 @@ eatFood() {
     global confirmPos
     ; 开背包
     sendInput "{Blind}b"
+    Sleep BACK_SLEEP
     ; 点击食物
+    DllCall("SetCursorPos", "int", foodPos[1], "int", foodPos[2])
+    Send "{Click}"
+    Sleep BUTTON_SLEEP
     for (food in foodList) {
         DllCall("SetCursorPos", "int", food[1], "int", food[2])
         Send "{Click}"

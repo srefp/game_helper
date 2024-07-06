@@ -11,6 +11,6 @@ click() {
     keepClicking := true
     while keepClicking {
         Send "{Click}"
-        Sleep 100
+        Sleep 20
     }
 }
