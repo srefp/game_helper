@@ -557,23 +557,38 @@ aarr() {
 
 resurrection() {
     global routeIndex
-    Loop 300 {
+    while true {
         tpNext()
         routeIndex--
 
-        Sleep (5 * 1000)
+        Sleep (4 * 1000)
         Click "Right"
+        Sleep 60
         Click "Right"
+        Sleep 60
         Click "Right"
-        Sleep (10 * 1000)
+        Sleep (6 * 1000)
 
         SendInput "1"
-        Sleep 200
+        Sleep 20
+        SendInput "2"
+        Sleep 20
+        SendInput "3"
+        Sleep 20
+        SendInput "4"
+        Sleep 500
+
         DllCall("SetCursorPos", "int", 1586, "int", 1074)
         Send "{Click}"
         Sleep 200
-        SendInput "1"
 
-        Sleep (110 * 1000)
+        DllCall("SetCursorPos", "int", 1872, "int", 332)
+        Send "{Click}"
+        Sleep 200
+
+        Sleep (100 * 1000)
+        ToolTip("开始跳崖！！！")
+        SetTimer () => ToolTip(), -5000
+        Sleep (9 * 1000)
     }
 }
