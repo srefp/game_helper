@@ -510,7 +510,7 @@ eatFood() {
     ; 点击食物
     DllCall("SetCursorPos", "int", foodPos[1], "int", foodPos[2])
     Send "{Click}"
-    Sleep BUTTON_SLEEP
+    Sleep 120
     for (food in foodList) {
         DllCall("SetCursorPos", "int", food[1], "int", food[2])
         Send "{Click}"
@@ -552,5 +552,28 @@ aarr() {
         if (!keepAttack) {
             break
         }
+    }
+}
+
+resurrection() {
+    global routeIndex
+    Loop 300 {
+        tpNext()
+        routeIndex--
+
+        Sleep (5 * 1000)
+        Click "Right"
+        Click "Right"
+        Click "Right"
+        Sleep (10 * 1000)
+
+        SendInput "1"
+        Sleep 200
+        DllCall("SetCursorPos", "int", 1586, "int", 1074)
+        Send "{Click}"
+        Sleep 200
+        SendInput "1"
+
+        Sleep (110 * 1000)
     }
 }
