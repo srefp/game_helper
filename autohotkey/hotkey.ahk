@@ -65,9 +65,9 @@ global WHEEL_SLEEP := 100 ; 选怪时滚轮滚动等待时间
 global SELECT_TWO_WAIT_SLEEP := 500 ; 锚点双选时的等待时间
 global SELECT_TWO_CLICK_SLEEP := 160 ; 锚点双选时点击后的等待时间
 global DIRECT_TP_SLEEP := 90 ; 快传等待时间
-global DIRECT_TP_BACK_SLEEP := 80 ; 快传复位等待时间
+global DIRECT_TP_BAG_SLEEP := 80 ; 快传复位等待时间
 global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
-global BACK_SLEEP := 400 ; 开背包的延迟
+global BAG_SLEEP := 400 ; 开背包的延迟
 
 SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 
@@ -258,9 +258,7 @@ executeStep(step, routeIndex) {
 
         ; 点击讨伐
         if (crusade) {
-            DllCall("SetCursorPos", "int", crusadePos[1], "int", crusadePos[2])
-            Send "{Click}"
-            Sleep CRUSADE_SLEEP
+            op("click", crusadePos, CRUSADE_SLEEP)
             sum += CRUSADE_SLEEP
             crusade := false
         }
@@ -280,9 +278,7 @@ executeStep(step, routeIndex) {
 
             map := monsterColumnPos
             monsterPosX := map[column]
-            DllCall("SetCursorPos", "int", monsterPosX, "int", monsterRowPos)
-            Send "{Click}"
-            Sleep BUTTON_SLEEP
+            op("click", [monsterPosX, monsterRowPos], BUTTON_SLEEP)
             sum += BUTTON_SLEEP
         }
 
@@ -332,8 +328,7 @@ executeStep(step, routeIndex) {
     }
 
     ; 点击传送锚点
-    DllCall("SetCursorPos", "int", x, "int", y)
-    Send "{Click}"
+    op("click", [x, y], 0)
 
     if (wait != 0) {
         Sleep wait
@@ -363,9 +358,7 @@ executeStep(step, routeIndex) {
     sum += WHEEL_SLEEP
 
     if (selectX != 0 && selectY != 0) {
-        DllCall("SetCursorPos", "int", selectX, "int", selectY)
-        Send "{Click}"
-        Sleep SELECT_TWO_CLICK_SLEEP
+        op("click", [selectX, selectY], SELECT_TWO_CLICK_SLEEP)
         sum += SELECT_TWO_CLICK_SLEEP
     }
 
@@ -374,28 +367,13 @@ executeStep(step, routeIndex) {
         qmSleep := 1200 - sum
         Sleep qmSleep
     }
-
-    ; 确认传送
-    DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
-    Send "{Click}"
-    Sleep BUTTON_SLEEP
+    op("click", confirmPos, BUTTON_SLEEP)
 
     ; 如果出现地脉挡住的情况
     if (HasProp(step, "try")) {
-        DllCall("SetCursorPos", "int", x, "int", y)
-        Send "{Click}"
-        Sleep SELECT_TWO_WAIT_SLEEP
-
-        selectX := selection[1][1]
-        selectY := selection[1][2]
-        DllCall("SetCursorPos", "int", selectX, "int", selectY)
-        Send "{Click}"
-        Sleep SELECT_TWO_CLICK_SLEEP
-
-        ; 确认传送
-        DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
-        Send "{Click}"
-        Sleep BUTTON_SLEEP
+        op("click", [x, y], SELECT_TWO_WAIT_SLEEP)
+        op("click", selection[1], SELECT_TWO_CLICK_SLEEP)
+        op("click", confirmPos, BUTTON_SLEEP)
     }
 
     ; 开始快捡
@@ -436,11 +414,8 @@ quickTp() {
     Send "{Click}"
     MouseGetPos &xpos, &ypos
     Sleep DIRECT_TP_SLEEP
-    MouseGetPos &xpos, &ypos
-    DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
-    Send "{Click}"
-    Sleep DIRECT_TP_BACK_SLEEP
-    DllCall("SetCursorPos", "int", xpos, "int", ypos)
+    op("click", confirmPos, DIRECT_TP_BAG_SLEEP)
+    op("move", [xpos, ypos], 0)
 }
 
 global debugMode := false
@@ -450,6 +425,17 @@ global timingIsStart := true
 FileEncoding "UTF-8"
 
 global gamingStartTime := A_Now
+
+op(type, pos, delay) {
+    if (type = "click") {
+        DllCall("SetCursorPos", "int", pos[1], "int", pos[2])
+        Send "{Click}"
+        Sleep delay
+    } else if (type = "move") {
+        DllCall("SetCursorPos", "int", pos[1], "int", pos[2])
+        Sleep delay
+    }
+}
 
 ; 计时
 startTiming() {
@@ -506,20 +492,12 @@ eatFood() {
     global confirmPos
     ; 开背包
     sendInput "{Blind}b"
-    Sleep BACK_SLEEP
+    Sleep BAG_SLEEP
     ; 点击食物
-    DllCall("SetCursorPos", "int", foodPos[1], "int", foodPos[2])
-    Send "{Click}"
-    Sleep 120
+    op("click", foodPos, 120)
     for (food in foodList) {
-        DllCall("SetCursorPos", "int", food[1], "int", food[2])
-        Send "{Click}"
-        Sleep BUTTON_SLEEP
-
-        ; 确认
-        DllCall("SetCursorPos", "int", confirmPos[1], "int", confirmPos[2])
-        Send "{Click}"
-        Sleep BUTTON_SLEEP
+        op("click", food, BUTTON_SLEEP)
+        op("click", confirmPos, BUTTON_SLEEP)
     }
     ; 关闭背包
     sendInput "{Blind}b"
@@ -578,13 +556,8 @@ resurrection() {
         SendInput "4"
         Sleep 500
 
-        DllCall("SetCursorPos", "int", 1586, "int", 1074)
-        Send "{Click}"
-        Sleep 200
-
-        DllCall("SetCursorPos", "int", 1872, "int", 332)
-        Send "{Click}"
-        Sleep 200
+        op("click", [1586, 1074], 200)
+        op("click", [1872, 332], 200)
 
         Sleep (100 * 1000)
         ToolTip("开始跳崖！！！")
