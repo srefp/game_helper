@@ -23,6 +23,9 @@ if (screenWidth = 1920 && screenHeight = 1080) {
 } else if (screenWidth = 2560 && screenHeight = 1600) {
     SCREEN := "25K"
     ToolTip "当前为2.5K的屏幕，已为您自动切换到2.5K自动传送！"
+} else if (screenWidth = 3840 && screenHeight = 2160) {
+    SCREEN := "4K"
+    ToolTip "当前为4K的屏幕，已为您自动切换到4K自动传送！"
 } else {
     ToolTip "未检测到您当前的屏幕分辨率，或暂不支持您的屏幕分辨率。"
 }
@@ -49,6 +52,18 @@ if (SCREEN = "25K") {
     trackMonsterPos := [1909, 1201]
     confirmPos := [2238, 1497]
     selection := [[1858, 1134]]
+    foodPos := []
+}
+
+if (SCREEN = "4K") {
+    crusadePos := [579, 1095]
+    clearWheelPos := [1911, 568]
+    monsterColumnPos := [1010, 1350, 1720]
+    monsterRowPos := 690
+    rowWheelNum := 9
+    trackMonsterPos := [2895, 1688]
+    confirmPos := [3371, 2017]
+    selection := [[2727, 1468]]
     foodPos := []
 }
 

@@ -27,6 +27,8 @@ global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计�
 
 #Include "./hotkey.ahk" ; 引入快捷键文件
 
+global foodList := [] ; 吃药列表
+
 ; 1 慢
 ; 2 中等
 ; 3 最快
