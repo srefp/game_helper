@@ -9,13 +9,13 @@ global routes := [
     {monster: [5, 1], pos: [1192, 684], pos2K: [1590, 915]}, ; 8
     {monster: [5, 2], pos: [711, 329], pos2K: [952, 444]}, ; 9 -> 雷音
     {monster: [5, 2], pos: [910, 323], pos2K: [1218, 431]}, ; 10
-    {monster: [5, 2], pos: [910, 223], pos2K: [1208, 290], select: 2}, ; 11
+    {monster: [5, 2], pos: [880, 53], wheel: -40}, ; 11
     {monster: [5, 2], pos: [1105, 450], pos2K: [1472, 600]}, ; 12
     {monster: [5, 2], pos: [951, 593], pos2K: [1272, 795]}, ; 13
     {monster: [5, 3], pos: [915, 561], pos2K: [1220, 752], select: 2}, ; 14 -> 土狗
-    {monster: [6, 1], pos: [157, 758], pos2K: [209, 1015], pos25K: [6, 1326], wheel: 30}, ; 15 -> 渊下宫
-    {monster: [6, 1], pos: [350, 105], pos2K: [2347, 1353], movStartX: 1000, movStartY: 100, movY2K: 800, movY: 800, wheel: 30}, ; 16
-    {monster: [6, 1], pos: [1809, 310], pos2K: [1990, 87], movStartX: 1000, movStartY: 100, movY: 600}, ; 17
-    {monster: [6, 1], pos: [1444, 389], pos2K: [1922, 525]}, ; 18
-    {monster: [6, 1], pos: [1195, 826], pos2K: [1922, 525], movY: -800}, ; 19
+    {monster: [6, 1], pos: [157, 758], narrow: 3}, ; 15 -> 渊下宫
+    {monster: [6, 1], pos: [576, 583], movStartX: 1000, movStartY: 80, movY: 800, narrow: 3}, ; 16
+    {monster: [6, 1], pos: [1486, 621], movStartX: 1000, movStartY: 100, movY: 600, narrow: 3}, ; 17
+    {monster: [6, 1], pos: [1444, 389]}, ; 18
+    {monster: [6, 1], pos: [1105, 397], movStartX: 1000, movStartY: 900, movY: -800, narrow: 3}, ; 19
 ]

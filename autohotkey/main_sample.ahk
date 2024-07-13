@@ -25,7 +25,7 @@ global hintEnabled := false ; 是否开启提示
 global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
 
 
-#Include "./hotkey.ahk" ; 引入快捷键文件
+#Include "./func/hotkey.ahk" ; 引入快捷键文件
 
 global foodList := [] ; 吃药列表
 

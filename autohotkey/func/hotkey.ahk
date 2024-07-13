@@ -1,3 +1,5 @@
+#Include "./base.ahk" ; 引入函数
+
 ; 后面的参数不用修改
 global crusadePos := [294, 545] ; 讨伐按钮的位置
 global clearWheelPos := [956, 283] ; 清空滚轮的位置
@@ -8,8 +10,8 @@ global trackMonsterPos := [1460, 840] ; 追踪怪的位置
 global confirmPos := [1678, 1005] ; 确认按钮的位置
 global selection := [[1370, 734]] ; 点击锚点时多选按钮的位置
 global foodPos := []
-global narrowPos := [88, 1300]
-global enlargePos := [88, 854]
+global narrowPos := [44, 651]
+global enlargePos := [44, 426]
 
 screenWidth := A_ScreenWidth
 screenHeight := A_ScreenHeight
@@ -165,6 +167,8 @@ executeStep(step, routeIndex) {
     y := 0
     narrow := 0
     pointFast := false
+    movStartX := 0
+    movStartY := 0
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
@@ -208,8 +212,11 @@ executeStep(step, routeIndex) {
     if (HasProp(step, "qm")) {
         qm := step.qm
     }
-    if (HasProp(step, "narrow")) {
-        narrow := step.narrow
+    if (HasProp(step, "movStartX")) {
+        movStartX := step.movStartX
+    }
+    if (HasProp(step, "movStartY")) {
+        movStartY := step.movStartY
     }
 
     if (is2K) {
@@ -256,6 +263,13 @@ executeStep(step, routeIndex) {
         wheel := step.wheel
     }
 
+    ; 如果你是处于快速模式，且你的点位有标记，就采用开地图直传的方式
+    if (fastMode && pointFast && HasProp(step, "fastNarrow")) {
+        narrow := step.fastNarrow
+    } else if (!pointFast && HasProp(step, "narrow")) {
+        narrow := step.narrow
+    }
+
     row := step.monster[1]
     column := step.monster[2]
 
@@ -273,7 +287,7 @@ executeStep(step, routeIndex) {
 
     if (fastMode && pointFast) {
         Send "{LShift down}"
-        Sleep 500
+        Sleep 400
         Send "{LShift up}"
     } else {
         Send "{F1}"
@@ -343,13 +357,12 @@ executeStep(step, routeIndex) {
                 op("click", enlargePos, 5)
             }
         }
-
     }
 
     ; 拖动
     if (movX != 0 || movY != 0) {
-        MouseGetPos &xpos, &ypos
-        SendEvent "{Click " . xpos . " " . ypos . " Down}{Click " . xpos + movX . " " . ypos + movY . " Up}"
+        DllCall("SetCursorPos", "int", movStartX, "int", movStartY)
+        SendEvent "{Click " . movStartX . " " . movStartY . " Down}{Click " . movStartX + movX . " " . movStartY + movY . " Up}"
         Sleep BUTTON_SLEEP
         sum += BUTTON_SLEEP
     }
@@ -387,19 +400,6 @@ executeStep(step, routeIndex) {
         sum += BUTTON_SLEEP
     }
 
-    if (wheel != 0) {
-        DllCall("SetCursorPos", "int", 0, "int", 0)
-        Sleep 10
-        if (wheel > 0) {
-            Loop wheel {
-                Send "{WheelUp}"
-            }
-        } else {
-            Loop -wheel {
-                Send "{WheelDown}"
-            }
-        }
-    }
     Sleep WHEEL_SLEEP
     sum += WHEEL_SLEEP
 
@@ -473,17 +473,6 @@ global timingIsStart := true
 FileEncoding "UTF-8"
 
 global gamingStartTime := A_Now
-
-op(type, pos, delay) {
-    if (type = "click") {
-        DllCall("SetCursorPos", "int", pos[1], "int", pos[2])
-        Send "{Click}"
-        Sleep delay
-    } else if (type = "move") {
-        DllCall("SetCursorPos", "int", pos[1], "int", pos[2])
-        Sleep delay
-    }
-}
 
 ; 计时
 startTiming() {
@@ -618,9 +607,4 @@ resurrection() {
         tip("开始跳崖！！！", 5000)
         Sleep (9 * 1000)
     }
-}
-
-tip(tipText, delay) {
-    ToolTip tipText
-    SetTimer () => ToolTip(), -delay
 }
