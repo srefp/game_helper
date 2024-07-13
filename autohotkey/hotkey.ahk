@@ -18,20 +18,19 @@ global SCREEN
 
 if (screenWidth = 1920 && screenHeight = 1080) {
     SCREEN := "1080P"
-    ToolTip "当前为1080P的屏幕，已为您自动切换到1080P自动传送！"
+    tip("当前为1080P的屏幕，已为您自动切换到1080P自动传送！", 2000)
 } else if (screenWidth = 2560 && screenHeight = 1440) {
     SCREEN := "2K"
-    ToolTip "当前为2K的屏幕，已为您自动切换到2K自动传送！"
+    tip("当前为2K的屏幕，已为您自动切换到2K自动传送！", 2000)
 } else if (screenWidth = 2560 && screenHeight = 1600) {
     SCREEN := "25K"
-    ToolTip "当前为2.5K的屏幕，已为您自动切换到2.5K自动传送！"
+    tip("当前为2.5K的屏幕，已为您自动切换到2.5K自动传送！", 2000)
 } else if (screenWidth = 3840 && screenHeight = 2160) {
     SCREEN := "4K"
-    ToolTip "当前为4K的屏幕，已为您自动切换到4K自动传送！"
+    tip("当前为4K的屏幕，已为您自动切换到4K自动传送！", 2000)
 } else {
-    ToolTip "未检测到您当前的屏幕分辨率，或暂不支持您的屏幕分辨率。"
+    tip("未检测到您当前的屏幕分辨率，或暂不支持您的屏幕分辨率。", 2000)
 }
-SetTimer () => ToolTip(), -2000
 
 if (SCREEN = "2K") {
     crusadePos := [396, 730]
@@ -432,9 +431,11 @@ quickPick() {
     static keepF := false
     if (keepF) {
         keepF := false
+        tip("停止快捡", 2000)
         return
     }
     keepF := true
+    tip("开始快捡", 2000)
     autoPick := true
     while autoPick
     {
@@ -492,16 +493,15 @@ startTiming() {
     if (timingIsStart) {
         gamingStartTime := A_Now
         FileAppend "锄地开始时间：" . curTimeStr . "`n", timingFile
-        ToolTip "开始计时!"
+        tip("开始计时!", 2000)
     } else {
         FileAppend "锄地结束时间：" . curTimeStr . "`n", timingFile
         seconds := DateDiff(curTime, gamingStartTime, "Seconds")
         minutes := Floor(seconds / 60)
         leftSeconds := Mod(seconds, 60)
         FileAppend "时长：" . minutes . "分钟" . leftSeconds . "秒" . "`n", timingFile
-        ToolTip "结束计时!"
+        tip("结束计时!", 2000)
     }
-    SetTimer () => ToolTip(), -2000
 
     timingIsStart := !timingIsStart
 }
@@ -511,24 +511,22 @@ showCoord() {
     if (debugMode) {
         MouseGetPos &xpos, &ypos
         posText := "" . xpos . ", " . ypos
-        ToolTip posText
+        tip(posText, 5000)
         A_Clipboard := posText
-        SetTimer () => ToolTip(), -5000
     } else {
         global routeIndex, routes
         if (routeIndex = 0) {
-            ToolTip "路线未开始。"
+            tip("路线未开始。", 5000)
         } else if (routeIndex >= routes.Length) {
-            ToolTip "路线已结束！"
+            tip("路线已结束！", 5000)
         } else {
             route := routes[routeIndex]
             if (HasProp(route, "name")) {
-                ToolTip "当前是第" . routeIndex . "个点位：" . route.name . "。"
+                tip("当前是第" . routeIndex . "个点位：" . route.name . "。", 5000)
             } else {
-                ToolTip "当前是第" . routeIndex . "个点位。"
+                tip("当前是第" . routeIndex . "个点位。", 5000)
             }
         }
-        SetTimer () => ToolTip(), -5000
     }
 }
 
@@ -617,8 +615,12 @@ resurrection() {
         op("click", [1872, 332], 200)
 
         Sleep (100 * 1000)
-        ToolTip("开始跳崖！！！")
-        SetTimer () => ToolTip(), -5000
+        tip("开始跳崖！！！", 5000)
         Sleep (9 * 1000)
     }
+}
+
+tip(tipText, delay) {
+    ToolTip tipText
+    SetTimer () => ToolTip(), -delay
 }
