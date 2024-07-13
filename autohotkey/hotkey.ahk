@@ -8,6 +8,8 @@ global trackMonsterPos := [1460, 840] ; 追踪怪的位置
 global confirmPos := [1678, 1005] ; 确认按钮的位置
 global selection := [[1370, 734]] ; 点击锚点时多选按钮的位置
 global foodPos := []
+global narrowPos := [88, 1300]
+global enlargePos := [88, 854]
 
 screenWidth := A_ScreenWidth
 screenHeight := A_ScreenHeight
@@ -64,7 +66,9 @@ if (SCREEN = "4K") {
     trackMonsterPos := [2895, 1688]
     confirmPos := [3371, 2017]
     selection := [[2727, 1468]]
-    foodPos := []
+    foodPos := [1726, 102]
+    narrowPos := [88, 1300]
+    enlargePos := [88, 854]
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
@@ -82,7 +86,7 @@ global SELECT_TWO_CLICK_SLEEP := 160 ; 锚点双选时点击后的等待时间
 global DIRECT_TP_SLEEP := 90 ; 快传等待时间
 global DIRECT_TP_BAG_SLEEP := 80 ; 快传复位等待时间
 global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
-global BAG_SLEEP := 400 ; 开背包的延迟
+global BAG_SLEEP := 500 ; 开背包的延迟
 
 SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 
@@ -160,10 +164,12 @@ executeStep(step, routeIndex) {
     wheel := 0
     x := 0
     y := 0
+    narrow := 0
     pointFast := false
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
+    is4K := SCREEN = "4K"
 
     ; 记录开图总时间
     sum := 0
@@ -203,6 +209,9 @@ executeStep(step, routeIndex) {
     if (HasProp(step, "qm")) {
         qm := step.qm
     }
+    if (HasProp(step, "narrow")) {
+        narrow := step.narrow
+    }
 
     if (is2K) {
         if (fastMode && HasProp(step, "fastPos2K")) {
@@ -222,16 +231,25 @@ executeStep(step, routeIndex) {
             x := step.pos25K[1]
             y := step.pos25K[2]
         }
-    } else {
-        if (fastMode && HasProp(step, "fastPos")) {
-            x := step.fastPos[1]
-            y := step.fastPos[2]
+    } else if (is4K) {
+        if (fastMode && HasProp(step, "fastPos4K")) {
+            x := step.fastPos4K[1]
+            y := step.fastPos4K[2]
             pointFast := true
         } else {
-            x := step.pos[1]
-            y := step.pos[2]
+            x := step.pos4K[1]
+            y := step.pos4K[2]
         }
-    }
+    } else {
+         if (fastMode && HasProp(step, "fastPos")) {
+             x := step.fastPos[1]
+             y := step.fastPos[2]
+             pointFast := true
+         } else {
+             x := step.pos[1]
+             y := step.pos[2]
+         }
+     }
 
     if (fastMode && pointFast && HasProp(step, "fastWheel")) {
         wheel := step.fastWheel
@@ -313,6 +331,20 @@ executeStep(step, routeIndex) {
             prevMonster[1] := row
             prevMonster[2] := column
         }
+    }
+
+    ; 缩小
+    if (narrow != 0) {
+        if (narrow > 0) {
+            Loop narrow {
+                op("click", narrowPos, 5)
+            }
+        } else {
+            Loop -narrow {
+                op("click", enlargePos, 5)
+            }
+        }
+
     }
 
     ; 拖动
@@ -481,6 +513,7 @@ showCoord() {
         posText := "" . xpos . ", " . ypos
         ToolTip posText
         A_Clipboard := posText
+        SetTimer () => ToolTip(), -5000
     } else {
         global routeIndex, routes
         if (routeIndex = 0) {
@@ -501,15 +534,24 @@ showCoord() {
 
 global foodList := []
 
+global bagOpen := false
+
 ; 快速吃药
 eatFood() {
     global foodList
     global confirmPos
+    global bagOpen
     ; 开背包
     sendInput "{Blind}b"
-    Sleep BAG_SLEEP
-    ; 点击食物
-    op("click", foodPos, 120)
+    if (!bagOpen) {
+        bagOpen := true
+        Sleep 600
+        ; 点击食物
+        op("click", foodPos, 200)
+    } else {
+        Sleep 500
+    }
+
     for (food in foodList) {
         op("click", food, BUTTON_SLEEP)
         op("click", confirmPos, BUTTON_SLEEP)
