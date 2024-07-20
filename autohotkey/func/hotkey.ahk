@@ -287,7 +287,7 @@ executeStep(step, routeIndex) {
 
     if (fastMode && pointFast) {
         Send "{LShift down}"
-        Sleep 400
+        Sleep 440
         Send "{LShift up}"
     } else {
         Send "{F1}"
