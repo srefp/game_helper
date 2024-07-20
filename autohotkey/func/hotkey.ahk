@@ -44,6 +44,8 @@ if (SCREEN = "2K") {
     confirmPos := [2255, 1347]
     selection := [[1908, 976]]
     foodPos := [1149, 69]
+    narrowPos := [60, 866]
+    enlargePos := [60, 569]
 }
 
 if (SCREEN = "25K") {
