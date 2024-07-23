@@ -160,7 +160,17 @@ global routes := [
 
 ![image-20240723095600286](./README.assets/image-20240723095600286.png)
 
-### 4. 再次打开Settings，配置autohotkey的地址
+### 4. 安装authotkey
+
+访问网址：[AutoHotkey Downloads](https://www.autohotkey.com/download/)
+
+![image-20240723184219469](./README.assets/image-20240723184219469.png)
+
+点击下载，一路Next安装完成。
+
+
+
+### 5. 再次打开Settings，配置autohotkey的地址
 
 这里打开Settings和上面一样。
 
@@ -176,7 +186,7 @@ global routes := [
 
 
 
-### 5. 运行/重新运行/停止脚本
+### 6. 运行/重新运行/停止脚本
 
 ![image-20240723100254265](./README.assets/image-20240723100254265.png)
 
