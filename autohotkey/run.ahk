@@ -3,7 +3,7 @@
 ; 成男成女：1
 ; 少年: 2
 ; r5魔术温: 3
-global kind := 1
+global kind := 2
 
 ; 冲刺脚本
 run() {
@@ -18,14 +18,13 @@ run() {
             ; 冲刺两下
             Loop 2 {
                 Send "{Click Right}"
-                Sleep 200
+                Sleep 400
             }
 
             ; 跳3次
-            Loop 3 {
-                Send "{Click Right}"
+            Loop 5 {
                 Send "{Space}"
-                Sleep 500
+                Sleep 580
             }
         }
     } else if (kind = 3) {
@@ -33,14 +32,13 @@ run() {
             ; 冲刺两下
             Loop 2 {
                 Send "{Click Right}"
-                Sleep 200
+                Sleep 400
             }
 
             ; 跳3次
-            Loop 3 {
-                Send "{Click Right}"
+            Loop 5 {
                 Send "{Space}"
-                Sleep 500
+                Sleep 580
             }
         }
     }
