@@ -111,7 +111,7 @@ global qmMode := false
 global prevMonster := [0, 0]
 
 ; 传送至下一个点位
-tpNext() {
+tpNext(qm) {
     global tpForbidden
     if (tpForbidden) {
         return
@@ -122,7 +122,7 @@ tpNext() {
         routeIndex++
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
-        executeStep routes[routeIndex], routeIndex
+        executeStep routes[routeIndex], routeIndex, qm
     }
     SetTimer () => tpForbidden := false , -5000
 }
@@ -140,13 +140,13 @@ tpPrev() {
         }
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
-        executeStep routes[routeIndex], routeIndex
+        executeStep routes[routeIndex], routeIndex, false
     }
     SetTimer () => tpForbidden := false , -8000
 }
 
 ; 执行每一步
-executeStep(step, routeIndex) {
+executeStep(step, routeIndex, qmParam) {
     global quickPickPause
     global prevMonster
     global crusade
@@ -171,6 +171,7 @@ executeStep(step, routeIndex) {
     pointFast := false
     movStartX := 0
     movStartY := 0
+    qmTp := false
 
     is2K := SCREEN = "2K"
     is25K := SCREEN = "25K"
@@ -257,7 +258,7 @@ executeStep(step, routeIndex) {
              x := step.pos[1]
              y := step.pos[2]
          }
-     }
+    }
 
     if (fastMode && pointFast && HasProp(step, "fastWheel")) {
         wheel := step.fastWheel
@@ -277,9 +278,15 @@ executeStep(step, routeIndex) {
 
     sameMonster := prevMonster[1] = row && prevMonster[2] = column
 
+    if (qmParam) {
+        qmTp := qmParam
+    } else {
+        qmTp := qmMode && qm
+    }
+
     ; 开书
     ; 开书前开大招
-    if (qmMode && qm) {
+    if (qmTp) {
         Send "{Blind}w"
         Click "Right"
         Sleep 50
@@ -582,7 +589,7 @@ aarr() {
 resurrection() {
     global routeIndex
     while true {
-        tpNext()
+        tpNext(false)
         routeIndex--
 
         Sleep (4 * 1000)

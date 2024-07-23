@@ -44,11 +44,17 @@ global foodList := [[1244, 773], [1801, 768], [2373, 775]]
 
 ### 6. qm传送
 
+**全局qm**
+
 将`main.ahk`文件中的qmMode改为true
 
 ```
 global debugMode := true
 ```
+
+**本次qm**
+
+按住`Alt + ->`键【按住Alt，然后键盘右键】，qm传送，注意，这个qm的延迟适合夜兰，琴有概率失败。
 
 
 
