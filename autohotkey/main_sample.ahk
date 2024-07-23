@@ -22,7 +22,7 @@
 global routeIndex := 1 ; 路线开始的点位 - 1，设置为29可直达传奇，地主设置为0，到别人世界设置为1
 global hintEnabled := false ; 是否开启提示
 
-global timingFile := "D:/codeRepo/IdeaProjects/game_helper/timing/-6.txt" ; 计时文件的绝对路径
+global timingFile := "D:/codeRepo/game_helper/timing/-6.txt" ; 计时文件的绝对路径
 
 
 #Include "./func/hotkey.ahk" ; 引入快捷键文件
@@ -34,17 +34,18 @@ global foodList := [] ; 吃药列表
 ; 3 最快
 global tpSpeed := 3
 
-#MaxThreadsPerHotKey 3
-XButton1::quickPick()
-MButton::aarr()
+;#MaxThreadsPerHotKey 3
+;XButton1::quickPick()
+;MButton::aarr()
 
 #MaxThreadsPerHotKey 1
 Right::tpNext(false)
 !Right::tpNext(true)
 Left::tpPrev()
 Up::showCoord()
-Down::startTiming()
+;Down::startTiming()
 XButton2::quickTp()
+tab::eatFood()
 
 global debugMode := true ; 是否开启debug模式
 
@@ -67,7 +68,7 @@ if (tpSpeed = 1) {
     global SELECT_TWO_CLICK_SLEEP := 180 ; 锚点双选时点击后的等待时间
     global DIRECT_TP_SLEEP := 120 ; 快传等待时间
     global DIRECT_TP_BACK_SLEEP := 100 ; 快传复位等待时间
-    global QUICK_PICK_SLEEP := 8 ; 快检等待时间，5不意味着5ms！！！
+    global QUICK_PICK_SLEEP := 5 ; 快检等待时间，5不意味着5ms！！！
 } else if (tpSpeed = 2) {
     global BUTTON_SLEEP := 60 ; 点击按钮的延时
     global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
