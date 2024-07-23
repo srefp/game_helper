@@ -281,7 +281,7 @@ executeStep(step, routeIndex, qmParam) {
     if (qmParam) {
         qmTp := qmParam
     } else {
-        qmTp := qmMode && qm
+        qmTp := (qmMode && qm)
     }
 
     ; 开书
