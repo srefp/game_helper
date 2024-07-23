@@ -1,4 +1,4 @@
-#Include "./route/642.ahk" ; 引入路线文件
+#Include "../route/642.ahk" ; 引入路线文件
 index := 0
 for (route in routes) {
     index++
