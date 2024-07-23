@@ -2,7 +2,7 @@
 
 ; 成男成女：1
 ; 少年: 2
-global kind := 2
+global kind := 1
 
 ; 冲刺脚本
 run() {
