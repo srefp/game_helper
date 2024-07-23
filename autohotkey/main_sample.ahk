@@ -39,7 +39,8 @@ XButton1::quickPick()
 MButton::aarr()
 
 #MaxThreadsPerHotKey 1
-Right::tpNext()
+Right::tpNext(false)
+!Right::tpNext(true)
 Left::tpPrev()
 Up::showCoord()
 Down::startTiming()
