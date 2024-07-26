@@ -528,9 +528,13 @@ showCoord() {
     }
 }
 
+global routeIndex := 0
+
 global foodList := []
 
 global bagOpen := false
+
+global timingFile := "D:/codeRepo/game_helper/timing/-6.txt" ; 计时文件的绝对路径
 
 ; 快速吃药
 eatFood() {
