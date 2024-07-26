@@ -39,7 +39,7 @@ global tpSpeed := 3
 
 #MaxThreadsPerHotKey 1
 Right::tpNext(false)
-!Right::tpNext(true)
+Ctrl & Right::tpNext(true)
 Left::tpPrev()
 Up::showCoord()
 ;Down::startTiming()
