@@ -1,22 +1,24 @@
 ; 配置项
 global inPos := [3266, 482] ; 第一个申请加入按钮的位置
+global exitWorldPos := [3298, 2023] ; 退出多人世界按钮的位置
 global OPT_DELAY := 400 ; 短等待
 global LONG_DELAY := 4000 ; 长等待
 global ENTER_WORLD_DELAY := 11 * 1000 ; 进入世界后的延迟
 global EXIT_WORLD_DELAY := 8 * 1000 ; 退出世界后的延迟
 global CIRCLE := 6606 ; 转一圈的鼠标唯一
 global ONE_DEGREE := CIRCLE / 360 ; 一度是多少
+global NAME := "小灯草" ; 名称
 
 ; 每次输入的内容不一样，防止被封
 global textList := [
-    "你好，请问可以拿点小灯草吗？",
-    "今天天气不错，请问可以拿点小灯草吗？",
-    "嗨嗨嗨~请问可以拿点小灯草吗？",
-    "喵喵喵~请问可以拿点小灯草吗？",
-    "你好，小灯草可以拿点吗？",
-    "今天天气不错，小灯草可以拿点吗？",
-    "嗨嗨嗨~小灯草可以拿点吗？",
-    "喵喵喵~小灯草可以拿点吗？",
+    "你好，请问可以拿点" . NAME . "吗？",
+    "今天天气不错，请问可以拿点" . NAME . "吗？",
+    "嗨嗨嗨~请问可以拿点" . NAME . "吗？",
+    "喵喵喵~请问可以拿点" . NAME . "吗？",
+    "你好，小灯草可以拿点" . NAME . "吗？",
+    "今天天气不错，" . NAME . "可以拿点吗？",
+    "嗨嗨嗨~" . NAME . "可以拿点吗？",
+    "喵喵喵~" . NAME . "可以拿点吗？",
 ]
 
 
@@ -109,5 +111,5 @@ runAndPick() {
 exitWorld() {
     Send "{F2}"
     Sleep OPT_DELAY
-    op("click", [3298, 2023], EXIT_WORLD_DELAY)
+    op("click", exitWorldPos, EXIT_WORLD_DELAY)
 }
