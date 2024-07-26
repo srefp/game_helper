@@ -28,14 +28,14 @@ Sleep 3 * 1000
 
 
 while (true) {
-;    ; 批量F2
-;    findFriend()
-;
-;    ; 等待进入世界
-;    Sleep ENTER_WORLD_DELAY
-;
-;    ; 对话
-;    communicate()
+    ; 批量F2
+    findFriend()
+
+    ; 等待进入世界
+    Sleep ENTER_WORLD_DELAY
+
+    ; 对话
+    communicate()
 
     Loop routes.Length {
         ; 传送到点位
@@ -98,7 +98,7 @@ runAndPick() {
                 Click "Right"
             }
 
-;            SendInput "{Blind}f"
+            SendInput "{Blind}f"
             Sleep 10
         }
 
