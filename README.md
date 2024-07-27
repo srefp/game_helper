@@ -118,10 +118,28 @@ global routes := [
 
 - 路线参数与上面的一样，传送时使用
 - operations：传送后的一系列操作。
-- mov：转向多少角度，正数瞬时针旋转，负数逆时针旋转。
-- dis：向这个方向前进多长距离
+- type：类型
+  - run：奔跑 【带有参数：turn表示跑之前转的角度，正数往右转，负数往左转； dist表示跑的距离，dir表示方向，wsad表示上下左右】
+  - walk：走 【带有参数：turn表示跑之前转的角度，正数往右转，负数往左转； dist表示跑的距离，dir表示方向，wsad表示上下左右】
+  - e：使用E技能 【带有参数： x表示水平方向的E，正数往右转，负数往左转，y表示垂直方向】
+  - click：点击鼠标左键 【无参数】
+
 
 前进的过程中会不断按F，确保能拿到东西。
+
+代码示例：
+
+```
+{monster: [2, 1], pos4K: [2298, 813],
+    operations: [
+        {type: "run", turn: 5, dist: 3},
+        {type: "run", turn: 10, dist: 3.2},
+        {type: "walk", turn: 5, dist: 1, dir: "w"},
+        {type: "e", x: 180, y: 100},
+        {type: "space"},
+        {type: "click"},
+]}, ; 1
+```
 
 
 
