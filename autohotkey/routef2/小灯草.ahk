@@ -3,8 +3,8 @@ global routes := [
         operations: [
 ;            {type: "run", turn: 5, dist: 3},
 ;            {type: "run", turn: 10, dist: 3.2},
-            {type: "walk", turn: 5, dist: 10, dir: "d"},
-;            {type: "e", x: 180, y: 100},
+            {type: "walk", turn: 5, dist: 1, dir: "w"},
+            {type: "e", x: 180, y: 100},
 ;            {type: "space"},
 ;            {type: "click"},
 
@@ -25,7 +25,7 @@ global routes := [
 ]
 
 ; type表示类型
-;   run表示奔跑 【带有参数：turn表示跑之前转的角度，正数往右转，负数往左转； dist表示跑的距离】
-;   walk表示走 【带有参数：turn表示跑之前转的角度，正数往右转，负数往左转； dist表示跑的距离】
+;   run表示奔跑 【带有参数：turn表示跑之前转的角度，正数往右转，负数往左转； dist表示跑的距离，dir表示方向，wsad表示上下左右】
+;   walk表示走 【带有参数：turn表示跑之前转的角度，正数往右转，负数往左转； dist表示跑的距离，dir表示方向，wsad表示上下左右】
 ;   e表示使用E技能 【带有参数： x表示水平方向的E，正数往右转，负数往左转，y表示垂直方向】
 ;   click表示点击鼠标左键 【无参数】
