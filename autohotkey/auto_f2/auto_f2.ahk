@@ -47,7 +47,7 @@ while (true) {
 ;        Sleep LONG_DELAY
 
         ; 注意：【这一行用来调试你传送后的操作，即你传送以后的跑、走等操作能不能拿到东西，routeIndex表示你现在正在调试第几个点位！！！】
-        routeIndex := 1
+        routeIndex := 3
 
         tip("开始", 2000)
         ; 走直线，捡东西
@@ -123,7 +123,7 @@ act(operation) {
         Sleep OPT_DELAY
 
         ; 奔向终点
-        Send "{" . operation.dir . " Down}"
+        Send "{" . dir . " Down}"
 
         index := 0
         Loop (operation.dist * 100) {
@@ -138,7 +138,7 @@ act(operation) {
             Sleep 10
         }
 
-        Send "{" . operation.dir . " Up}"
+        Send "{" . dir . " Up}"
 
 
     } else if (type = "e") {
@@ -151,14 +151,14 @@ act(operation) {
 
 
     } else if (type = "walk") {
-        Send "{" . operation.dir . " Down}"
+        Send "{" . dir . " Down}"
 
         Loop (operation.dist * 100) {
              ; 注意：【这里在调试的时候注释掉，取消F，防止你把东西拿了，没办法调试了，草神的E没办法，扫了就没了！！！】
 ;            SendInput "{Blind}f"
             Sleep 10
         }
-        Send "{" . operation.dir . " Up}"
+        Send "{" . dir . " Up}"
 
 
     } else if (type = "click") {
