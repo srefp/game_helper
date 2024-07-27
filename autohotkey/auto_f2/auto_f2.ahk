@@ -30,25 +30,29 @@ Sleep 3 * 1000
 
 
 while (true) {
-    ; 批量F2
-    findFriend()
-
-    ; 等待进入世界
-    Sleep ENTER_WORLD_DELAY
-
-    ; 对话
-    communicate()
+;    ; 批量F2
+;    findFriend()
+;
+;    ; 等待进入世界
+;    Sleep ENTER_WORLD_DELAY
+;
+;    ; 对话
+;    communicate()
 
     Loop routes.Length {
-        ; 传送到点位
-        tpNext(false)
-        Sleep LONG_DELAY
+;        ; 传送到点位
+;        tpNext(false)
+;        Sleep LONG_DELAY
+        routeIndex++
 
+        tip("开始", 2000)
         ; 走直线，捡东西
-        runAndPick()
+        actOperations()
     }
 
     ; 退出世界
+    tip("结束", 2000)
+    Sleep 1000 * 1000 * 1000
     exitWorld()
 }
 
@@ -82,29 +86,11 @@ communicate() {
     Sleep OPT_DELAY
 }
 
-runAndPick() {
+actOperations() {
     operations := routes[routeIndex].operations
 
     for (operation in operations) {
-        DllCall("mouse_event", "Uint", 0x01, "UInt", operation.mov * ONE_DEGREE, "Uint", 0)
-        Sleep OPT_DELAY
-
-        ; 奔向终点
-        Send "{w Down}"
-
-        index := 0
-        Loop (operation.dis * 100) {
-            index++
-            ; 前1s和后1s不冲刺
-            if (index > 100 && index < (operation.dis - 1) * 100) {
-                Click "Right"
-            }
-
-            SendInput "{Blind}f"
-            Sleep 10
-        }
-
-        Send "{w Up}"
+        act(operation)
     }
 }
 
@@ -112,4 +98,67 @@ exitWorld() {
     Send "{F2}"
     Sleep OPT_DELAY
     op("click", exitWorldPos, EXIT_WORLD_DELAY)
+}
+
+act(operation) {
+    type := operation.type
+
+    ; 如果你有方向，以你的方向为准，如果你没有方向，默认向前
+    dir := "w"
+    if (HasProp(operation, "dir")) {
+        dir := operation.dir
+    }
+
+    tip("type" . type, 2000)
+
+
+    if (type = "run") {
+        tip("here run", 2000)
+
+        DllCall("mouse_event", "Uint", 0x01, "UInt", operation.turn * ONE_DEGREE, "Uint", 0)
+        Sleep OPT_DELAY
+
+        ; 奔向终点
+        Send "{" . operation.dir . " Down}"
+
+        index := 0
+        Loop (operation.dist * 100) {
+            index++
+            ; 前1s和后1s不冲刺
+            if (index > 100 && index < (operation.dist - 1) * 100) {
+                Click "Right"
+            }
+
+;            SendInput "{Blind}f"
+            Sleep 10
+        }
+
+        Send "{" . operation.dir . " Up}"
+
+
+    } else if (type = "e") {
+        Send "{e Down}"
+        Sleep OPT_DELAY
+        DllCall("mouse_event", "Uint", 0x01, "UInt", operation.x * ONE_DEGREE, "Uint", operation.y)
+        Sleep OPT_DELAY
+        Send "{e Up}"
+        Sleep OPT_DELAY
+
+
+    } else if (type = "walk") {
+        Send "{" . operation.dir . " Down}"
+
+        Loop (operation.dist * 100) {
+;            SendInput "{Blind}f"
+            Sleep 10
+        }
+        Send "{" . operation.dir . " Up}"
+
+
+    } else if (type = "click") {
+        Send "{Click}"
+        Sleep OPT_DELAY
+
+
+    }
 }
