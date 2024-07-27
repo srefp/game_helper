@@ -28,6 +28,8 @@ global textList := [
 
 Sleep 3 * 1000
 
+global routeIndex := 0
+
 
 while (true) {
     ; 注意：【这里是进别人世界的，在自己世界调试的时候可以注释掉！！！】
@@ -42,22 +44,22 @@ while (true) {
 
     Loop routes.Length {
         ; 注意：【这个地方是传送的！！！】
-;        ; 传送到点位
-;        tpNext(false)
-;        Sleep LONG_DELAY
+        ; 传送到点位
+        tpNext(false)
+        Sleep LONG_DELAY
 
         ; 注意：【这一行用来调试你传送后的操作，即你传送以后的跑、走等操作能不能拿到东西，routeIndex表示你现在正在调试第几个点位！！！】
-        routeIndex := 3
 
         tip("开始", 2000)
         ; 走直线，捡东西
         actOperations()
 
-        ; 注意：【这个地方表示结束，用来调试单个路线！！！】
-        tip("结束", 2000)
-        Sleep 1000 * 1000 * 1000
+
     }
 
+    ; 注意：【这个地方表示结束，用来调试单个路线！！！】
+    tip("结束", 2000)
+    Sleep 1000 * 1000 * 1000
     ; 退出世界
     exitWorld()
 }
@@ -151,6 +153,9 @@ act(operation) {
 
 
     } else if (type = "walk") {
+        DllCall("mouse_event", "Uint", 0x01, "UInt", operation.turn * ONE_DEGREE, "Uint", 0)
+        Sleep OPT_DELAY
+
         Send "{" . dir . " Down}"
 
         Loop (operation.dist * 100) {
@@ -164,6 +169,27 @@ act(operation) {
     } else if (type = "click") {
         Send "{Click}"
         Sleep OPT_DELAY
+
+
+    } else if (type = "round") {
+        roundDirs := ["w", "a", "s", "d"]
+        for (roundDir in roundDirs) {
+            Send "{" . roundDir . " Down}"
+
+            Loop (1 * 100) {
+                 ; 注意：【这里在调试的时候注释掉，取消F，防止你把东西拿了，没办法调试了，草神的E没办法，扫了就没了！！！】
+    ;            SendInput "{Blind}f"
+                Sleep 10
+            }
+            Send "{" . roundDir . " Up}"
+        }
+
+
+    } else if (type = "esc") {
+        Send "{esc}"
+        Sleep OPT_DELAY
+        Send "{esc}"
+        Sleep 2000
 
 
     }
