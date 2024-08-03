@@ -1,21 +1,21 @@
 global routes := [
-;    {monster: [2, 1], pos4K: [2298, 813],
-;        operations: [
-;            {type: "run", turn: 8, dist: 4.2},
-;            {type: "run", turn: 30, dist: 2},
-;    ]}, ; 1
-;
-;    {monster: [2, 1], pos4K: [2298, 813], operations: [
-;        {type: "walk", turn: 10, dir: "s", dist: 4.6},
-;        {type: "walk", turn: 90, dir: "a", dist: 0.7},
-;    ]}, ; 2
-;
-;    {monster: [3, 3], pos4K: [1455, 152], operations: [
-;        {type: "run", turn: 45, dist: 4.5},
-;        {type: "run", turn: -40, dist: 3.4},
-;        {type: "run", turn: -180, dist: 1},
-;        {type: "e", x: 0, y: 0},
-;    ]}, ; 3
+    {monster: [2, 1], pos4K: [2298, 813],
+        operations: [
+            {type: "run", turn: 8, dist: 4.2},
+            {type: "run", turn: 30, dist: 2},
+    ]}, ; 1
+
+    {monster: [2, 1], pos4K: [2298, 813], operations: [
+        {type: "walk", turn: 10, dir: "s", dist: 4.6},
+        {type: "walk", turn: 90, dir: "a", dist: 0.7},
+    ]}, ; 2
+
+    {monster: [3, 3], pos4K: [1455, 152], operations: [
+        {type: "run", turn: 45, dist: 4.5},
+        {type: "run", turn: -40, dist: 3.4},
+        {type: "run", turn: -180, dist: 1},
+        {type: "e", x: 0, y: 0},
+    ]}, ; 3
 
     {monster: [1, 3], pos4K: [1177, 933], select: 2, operations: [
         {type: "run", turn: -30, dir: "d", dist: 14},

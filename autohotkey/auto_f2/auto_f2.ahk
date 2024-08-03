@@ -32,15 +32,17 @@ global routeIndex := 0
 
 
 while (true) {
-    ; 注意：【这里是进别人世界的，在自己世界调试的时候可以注释掉！！！】
-;    ; 批量F2
-;    findFriend()
-;
-;    ; 等待进入世界
-;    Sleep ENTER_WORLD_DELAY
-;
-;    ; 对话
-;    communicate()
+;     注意：【这里是进别人世界的，在自己世界调试的时候可以注释掉！！！】
+    ; 批量F2
+    findFriend()
+
+    ; 等待进入世界
+    Sleep ENTER_WORLD_DELAY
+
+    Sleep 1000 * 1000 * 1000 * 1000
+
+    ; 对话
+    communicate()
 
     Loop routes.Length {
         ; 注意：【这个地方是传送的！！！】
