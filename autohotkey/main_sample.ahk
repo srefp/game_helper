@@ -52,6 +52,8 @@ global debugMode := true ; 是否开启debug模式
 
 global fastMode := false ; 是否开启超快模式
 
+global waitQmSum := false ; 是否等角色Q完（Q太快会被吞，可以设置为true，防止被吞
+
 global qmMode := false ; 是否开启qm模式
 
 if (tpSpeed = 1) {
