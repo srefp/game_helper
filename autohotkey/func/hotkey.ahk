@@ -173,7 +173,7 @@ executeStep(step, routeIndex, qmParam) {
     if (qmTp) {
         Send "{Blind}w"
         Click "Right"
-        Sleep 50
+        Sleep 450
         Send "{Blind}q"
         Sleep 10
     }
