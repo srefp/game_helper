@@ -1,5 +1,7 @@
 #Include "./base.ahk" ; 引入函数
 
+global waitQmSum := false ; 是否等夜兰Q完
+
 ; 后面的参数不用修改
 global crusadePos := [9884, 33238] ; 讨伐按钮的位置
 global clearWheelPos := [32622, 17241] ; 清空滚轮的位置
@@ -173,7 +175,7 @@ executeStep(step, routeIndex, qmParam) {
     if (qmTp) {
         Send "{Blind}w"
         Click "Right"
-        Sleep 450
+        Sleep 50
         Send "{Blind}q"
         Sleep 10
     }
@@ -295,7 +297,7 @@ executeStep(step, routeIndex, qmParam) {
     }
 
     ; 为了qm，补足整个延迟时间
-    if (qmTp && sum < 1200) {
+    if (waitQmSum && qmTp && sum < 1200) {
         qmSleep := 1200 - sum
         Sleep qmSleep
     }
