@@ -4,13 +4,14 @@ space::click()
 
 click() {
     static keepClicking := false
+
     if (keepClicking) {
         keepClicking := false
         return
     }
     keepClicking := true
     while keepClicking {
-        Send "{Click}"
-        Sleep 5
+        Send "{Right}"
+        Sleep 300
     }
 }

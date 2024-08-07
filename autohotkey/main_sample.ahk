@@ -17,6 +17,8 @@
 ;   1、在引入路线文件的配置中，修改为你所需要的路线文件进行引入。
 ;   2、默认第一个点位需要手动传送过去，如果是自己开地，将routeIndex改为0，从而传送到第一个点位。
 
+#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
+
 #Include "./route/-6.ahk" ; 引入路线文件
 #Include "./func/hotkey.ahk" ; 引入快捷键文件
 

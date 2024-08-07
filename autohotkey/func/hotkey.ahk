@@ -1,77 +1,27 @@
 #Include "./base.ahk" ; 引入函数
 
 ; 后面的参数不用修改
-global crusadePos := [294, 545] ; 讨伐按钮的位置
-global clearWheelPos := [956, 283] ; 清空滚轮的位置
-global monsterColumnPos := [500, 680, 860] ; 三列怪的不同x值
-global monsterRowPos := 350 ; 怪的y值
+global crusadePos := [9884, 33238] ; 讨伐按钮的位置
+global clearWheelPos := [32622, 17241] ; 清空滚轮的位置
+global monsterColumnPos := [17242, 23046, 29362] ; 三列怪的不同x值
+global monsterRowPos := 20944 ; 怪的y值
 global rowWheelNum := 9 ; 滚动一行需要的滚轮数
-global trackMonsterPos := [1460, 840] ; 追踪怪的位置
-global confirmPos := [1678, 1005] ; 确认按钮的位置
-global selection := [[1370, 734]] ; 点击锚点时多选按钮的位置
-global foodPos := []
-global narrowPos := [44, 651]
-global enlargePos := [44, 426]
+global trackMonsterPos := [49420, 51238] ; 追踪怪的位置
+global confirmPos := [57546, 61225] ; 确认按钮的位置
+global selection := [[46552, 44560]] ; 点击锚点时多选按钮的位置
+global foodPos := [29464, 3096]
+global narrowPos := [1502, 39461]
+global enlargePos := [1502, 25923]
 
 screenWidth := A_ScreenWidth
 screenHeight := A_ScreenHeight
 
 global SCREEN
 
-if (screenWidth = 1920 && screenHeight = 1080) {
-    SCREEN := "1080P"
-    tip("当前为1080P的屏幕，已为您自动切换到1080P自动传送！", 2000)
-} else if (screenWidth = 2560 && screenHeight = 1440) {
-    SCREEN := "2K"
-    tip("当前为2K的屏幕，已为您自动切换到2K自动传送！", 2000)
-} else if (screenWidth = 2560 && screenHeight = 1600) {
-    SCREEN := "25K"
-    tip("当前为2.5K的屏幕，已为您自动切换到2.5K自动传送！", 2000)
-} else if (screenWidth = 3840 && screenHeight = 2160) {
-    SCREEN := "4K"
-    tip("当前为4K的屏幕，已为您自动切换到4K自动传送！", 2000)
+if (screenHeight / screenWidth = 0.5625) {
+    tip("当前屏幕比例支持自动传送！", 2000)
 } else {
-    tip("未检测到您当前的屏幕分辨率，或暂不支持您的屏幕分辨率。", 2000)
-}
-
-if (SCREEN = "2K") {
-    crusadePos := [396, 730]
-    clearWheelPos := [1274, 382]
-    monsterColumnPos := [660, 900, 1140]
-    monsterRowPos := 460
-    rowWheelNum := 9
-    trackMonsterPos := [1913, 1120]
-    confirmPos := [2255, 1347]
-    selection := [[1908, 976]]
-    foodPos := [1149, 69]
-    narrowPos := [60, 866]
-    enlargePos := [60, 569]
-}
-
-if (SCREEN = "25K") {
-    crusadePos := [393, 800]
-    clearWheelPos := [1274, 461]
-    monsterColumnPos := [660, 900, 1140]
-    monsterRowPos := 544
-    rowWheelNum := 9
-    trackMonsterPos := [1909, 1201]
-    confirmPos := [2238, 1497]
-    selection := [[1858, 1134]]
-    foodPos := []
-}
-
-if (SCREEN = "4K") {
-    crusadePos := [579, 1095]
-    clearWheelPos := [1911, 568]
-    monsterColumnPos := [1010, 1350, 1720]
-    monsterRowPos := 690
-    rowWheelNum := 9
-    trackMonsterPos := [2895, 1688]
-    confirmPos := [3371, 2017]
-    selection := [[2727, 1468]]
-    foodPos := [1726, 102]
-    narrowPos := [88, 1300]
-    enlargePos := [88, 854]
+    tip("当前屏幕比例不支持自动传送！", 2000)
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
@@ -96,7 +46,6 @@ SetDefaultMouseSpeed 16 ; 拖动地图时的鼠标移速
 ; 关闭进程名为Snipaste.exe的程序
 ProcessClose "Snipaste.exe"
 
-#HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
 InstallKeybdHook
 InstallMouseHook
 ProcessSetPriority "Low" ; 低优先模式
@@ -157,8 +106,6 @@ executeStep(step, routeIndex, qmParam) {
     quickPickPause := true
 
     ; 获取值
-    movX := 0
-    movY := 0
     selectX := 0
     selectY := 0
     wait := 0
@@ -169,39 +116,11 @@ executeStep(step, routeIndex, qmParam) {
     y := 0
     narrow := 0
     pointFast := false
-    movStartX := 0
-    movStartY := 0
     qmTp := false
-
-    is2K := SCREEN = "2K"
-    is25K := SCREEN = "25K"
-    is4K := SCREEN = "4K"
 
     ; 记录开图总时间
     sum := 0
 
-    if (is2K) {
-        if (HasProp(step, "movX2K")) {
-            movX := step.movX2K
-        }
-    } else if (is25K) {
-        if (HasProp(step, "movX25K")) {
-            movX := step.movX25K
-        }
-    } else if (HasProp(step, "movX")) {
-        movX := step.movX
-    }
-    if (is2K) {
-        if (HasProp(step, "movY2K")) {
-            movY := step.movY2K
-        }
-    } else if (is25K) {
-        if (HasProp(step, "movY25K")) {
-            movY := step.movY25K
-        }
-    } else if (HasProp(step, "movY")) {
-        movY := step.movY
-    }
     if (HasProp(step, "select")) {
         selectX := selection[step.select - 1][1]
         selectY := selection[step.select - 1][2]
@@ -215,49 +134,14 @@ executeStep(step, routeIndex, qmParam) {
     if (HasProp(step, "qm")) {
         qm := step.qm
     }
-    if (HasProp(step, "movStartX")) {
-        movStartX := step.movStartX
-    }
-    if (HasProp(step, "movStartY")) {
-        movStartY := step.movStartY
-    }
 
-    if (is2K) {
-        if (fastMode && HasProp(step, "fastPos2K")) {
-            x := step.fastPos2K[1]
-            y := step.fastPos2K[2]
-            pointFast := true
-        } else {
-            x := step.pos2K[1]
-            y := step.pos2K[2]
-        }
-    } else if (is25K) {
-        if (fastMode && HasProp(step, "fastPos25K")) {
-            x := step.fastPos25K[1]
-            y := step.fastPos25K[2]
-            pointFast := true
-        } else {
-            x := step.pos25K[1]
-            y := step.pos25K[2]
-        }
-    } else if (is4K) {
-        if (fastMode && HasProp(step, "fastPos4K")) {
-            x := step.fastPos4K[1]
-            y := step.fastPos4K[2]
-            pointFast := true
-        } else {
-            x := step.pos4K[1]
-            y := step.pos4K[2]
-        }
+    if (fastMode && HasProp(step, "fastPos")) {
+        x := step.fastPos[1]
+        y := step.fastPos[2]
+        pointFast := true
     } else {
-         if (fastMode && HasProp(step, "fastPos")) {
-             x := step.fastPos[1]
-             y := step.fastPos[2]
-             pointFast := true
-         } else {
-             x := step.pos[1]
-             y := step.pos[2]
-         }
+        x := step.pos[1]
+        y := step.pos[2]
     }
 
     if (fastMode && pointFast && HasProp(step, "fastWheel")) {
@@ -319,11 +203,9 @@ executeStep(step, routeIndex, qmParam) {
         }
 
         if (!sameMonster) {
-            DllCall("SetCursorPos", "int", clearWheelPos[1], "int", clearWheelPos[2]) ; 清空滚轮
-            Send "{LButton down}"
-            Sleep CLICK_DOWN_SLEEP
+            op("longClick", clearWheelPos, CLICK_DOWN_SLEEP) ; 清空滚轮
             sum += CLICK_DOWN_SLEEP
-            Send "{LButton up}"
+
             monsterWheel := (row - 1) * rowWheelNum
             LOOP monsterWheel {
                 Send "{WheelDown}"
@@ -338,17 +220,13 @@ executeStep(step, routeIndex, qmParam) {
         }
 
         ; 追踪怪
-        DllCall("SetCursorPos", "int", trackMonsterPos[1], "int", trackMonsterPos[2])
         if (sameMonster) {
-            Send "{Click}"
-            Sleep CANCEL_AND_CLICK_SLEEP
+            op("click", trackMonsterPos, CANCEL_AND_CLICK_SLEEP)
             sum += CANCEL_AND_CLICK_SLEEP
-            Send "{Click}"
-            Sleep MAP_SLEEP
+            op("click", trackMonsterPos, MAP_SLEEP)
             sum += MAP_SLEEP
         } else {
-            Send "{Click}"
-            Sleep MAP_SLEEP2
+            op("click", trackMonsterPos, MAP_SLEEP2)
             sum += MAP_SLEEP2
             prevMonster[1] := row
             prevMonster[2] := column
@@ -369,10 +247,9 @@ executeStep(step, routeIndex, qmParam) {
     }
 
     ; 拖动
-    if (movX != 0 || movY != 0) {
-        DllCall("SetCursorPos", "int", movStartX, "int", movStartY)
-        SendEvent "{Click " . movStartX . " " . movStartY . " Down}{Click " . movStartX + movX . " " . movStartY + movY . " Up}"
-        Sleep BUTTON_SLEEP
+    if (HasProp(step, "drag")) {
+        drag := step.drag
+        op("drag", drag, BUTTON_SLEEP)
         sum += BUTTON_SLEEP
     }
 
@@ -418,7 +295,7 @@ executeStep(step, routeIndex, qmParam) {
     }
 
     ; 为了qm，补足整个延迟时间
-    if (qmMode && sum < 1200) {
+    if (qmTp && sum < 1200) {
         qmSleep := 1200 - sum
         Sleep qmSleep
     }
@@ -469,10 +346,10 @@ quickPick() {
 ; 快速传送，按前进键直接传送
 quickTp() {
     Send "{Click}"
-    MouseGetPos &xpos, &ypos
+    pos := logicalPos()
     Sleep DIRECT_TP_SLEEP
     op("click", confirmPos, DIRECT_TP_BAG_SLEEP)
-    op("move", [xpos, ypos], 0)
+    op("move", pos, 0)
 }
 
 global debugMode := false
@@ -507,8 +384,8 @@ startTiming() {
 ; 显示当前坐标
 showCoord() {
     if (debugMode) {
-        MouseGetPos &xpos, &ypos
-        posText := "" . xpos . ", " . ypos
+        pos := logicalPos()
+        posText := "" . pos[1] . ", " . pos[2]
         tip(posText, 5000)
         A_Clipboard := posText
     } else {
@@ -613,8 +490,8 @@ resurrection() {
         SendInput "4"
         Sleep 500
 
-        op("click", [1586, 1074], 200)
-        op("click", [1872, 332], 200)
+        op("click", [40617, 48912], 200)
+        op("click", [47941, 15120], 200)
 
         Sleep (100 * 1000)
         tip("开始跳崖！！！", 5000)
