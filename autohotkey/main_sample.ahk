@@ -44,7 +44,7 @@ Right::tpNext(false)
 Ctrl & Right::tpNext(true)
 Left::tpPrev()
 Up::showCoord()
-;Down::startTiming()
+Down::startTiming()
 XButton2::quickTp()
 tab::eatFood()
 

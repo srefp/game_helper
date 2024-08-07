@@ -369,9 +369,24 @@ startTiming() {
     curTimeStr := FormatTime(curTime, "yyyy-MM-dd HH:mm:ss")
     if (timingIsStart) {
         gamingStartTime := A_Now
+
+        ; 文件是否存在
+        AttributeString := FileExist(timingFile)
+        if (AttributeString != 'A') {
+            tip("计时文件不存在", 1000)
+            return
+        }
+
         FileAppend "锄地开始时间：" . curTimeStr . "`n", timingFile
         tip("开始计时!", 2000)
     } else {
+        ; 文件是否存在
+        AttributeString := FileExist(timingFile)
+        if (AttributeString != 'A') {
+            tip("计时文件不存在", 1000)
+            return
+        }
+
         FileAppend "锄地结束时间：" . curTimeStr . "`n", timingFile
         seconds := DateDiff(curTime, gamingStartTime, "Seconds")
         minutes := Floor(seconds / 60)

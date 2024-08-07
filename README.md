@@ -53,7 +53,7 @@ global foodList := [[1244, 773], [1801, 768], [2373, 775]]
 将`main.ahk`文件中的qmMode改为true
 
 ```
-global debugMode := true
+global qmMode := true
 ```
 
 **本次qm**
@@ -88,7 +88,7 @@ global debugMode := true
 
 ```
 global routes := [
-    {monster: [2, 1], pos2K: [758, 186], name: "风龙废墟"}, ; 1
+    {monster: [2, 1], pos: [19412, 8471], name: "风龙废墟"}, ; 1
 ]
 ```
 
@@ -222,6 +222,20 @@ global routes := [
 ### 6. 运行/重新运行/停止脚本
 
 ![image-20240723100254265](./README.assets/image-20240723100254265.png)
+
+
+
+### 7. 更换其他路线
+
+![image-20240807225209017](./README.assets/image-20240807225209017.png)
+
+![image-20240807225358139](./README.assets/image-20240807225358139.png)
+
+### 8. 锄地计时
+
+![image-20240807225655211](./README.assets/image-20240807225655211.png)
+
+
 
 
 
