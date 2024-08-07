@@ -29,7 +29,7 @@ op(type, params, delay) {
 
         DllCall("SetCursorPos", "int", pPos[1], "int", pPos[2])
         Send "{LButton down}"
-        Sleep CLICK_DOWN_SLEEP
+        Sleep delay
         Send "{LButton up}"
     }
 }

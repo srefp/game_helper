@@ -6,7 +6,6 @@ global OPT_DELAY := 400 ; 短等待
 #Include "../func/base.ahk" ; 引入函数
 
 Alt & Z::findFriend()
-XButton1::findFriend()
 
 findFriend() {
     Loop 3 {
