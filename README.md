@@ -82,7 +82,7 @@ global debugMode := true
 
 打开原神后，按键盘的上方向键可以获取当前鼠标的坐标，用来标点，将标点移动到你要传送的锚点，按上键，就可以将坐标复制到你的剪切板，直接粘贴到路线文件里面即可。
 
-![image-20240723111833910](./README.assets/image-20240723111833910.png)
+![image-20240808101505860](./README.assets/image-20240808101505860.png)
 
 新建一个路线文件：
 
@@ -98,7 +98,7 @@ global routes := [
 - name：名称。
 - narrow：缩小地图（正数为缩小，负数为放大）
 - wheel：滚轮（正数缩小，负数放大）
-- drag：拖动的开始坐标和结束坐标，示例：`drag: [1000, 100, 1000, 1000]`，前两个数字是开始拖动的坐标，后两个数字是结束拖动的坐标。
+- drag：拖动的开始坐标和结束坐标，示例：`drag: [10000, 1000, 10000, 10000]`，前两个数字是开始拖动的坐标，后两个数字是结束拖动的坐标。
 
 > Tips:
 >
@@ -126,7 +126,7 @@ global routes := [
 代码示例：
 
 ```
-{monster: [2, 1], pos4K: [2298, 813],
+{monster: [2, 1], pos: [39229, 24678],
     operations: [
         {type: "run", turn: 5, dist: 3},
         {type: "run", turn: 10, dist: 3.2},
@@ -167,15 +167,17 @@ global routes := [
 
 
 
-访问以下代码网站：[代码链接](http://106.55.181.191:12200/root/game_helper)
+复制以下链接：
 
-![image-20240723093845403](./README.assets/image-20240723093845403.png)
+```
+https://gitee.com/liu-kangjian/game_helper.git
+```
 
 
 
 把复制的链接粘贴到IDEA中。
 
-![image-20240723094627779](./README.assets/image-20240723094627779.png)
+![image-20240808100924799](./README.assets/image-20240808100924799.png)
 
 ![image-20240723094941551](./README.assets/image-20240723094941551.png)
 
