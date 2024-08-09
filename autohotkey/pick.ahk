@@ -27,4 +27,4 @@ changePickingMode() {
 }
 
 f::quickPick()
-XButton1::changePickingMode()
+`::changePickingMode()
