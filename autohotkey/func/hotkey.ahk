@@ -399,8 +399,8 @@ startTiming() {
 }
 
 ; 显示当前坐标
-showCoord() {
-    if (debugMode) {
+showCoord(showTip) {
+    if (!showTip && debugMode) {
         pos := logicalPos()
         posText := "" . pos[1] . ", " . pos[2]
         tip(posText, 5000)
