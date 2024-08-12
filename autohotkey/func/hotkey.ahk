@@ -18,8 +18,6 @@ global enlargePos := [1502, 25923]
 screenWidth := A_ScreenWidth
 screenHeight := A_ScreenHeight
 
-global SCREEN
-
 if (screenHeight / screenWidth = 0.5625) {
     tip("当前屏幕比例支持自动传送！", 2000)
 } else {
