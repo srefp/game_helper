@@ -25,7 +25,7 @@ if (screenHeight / screenWidth = 0.5625) {
 }
 
 global BUTTON_SLEEP := 60 ; 点击按钮的延时
-global BOOK_SLEEP := 450 ; 不跨怪开书等待时间
+global BOOK_SLEEP := 470 ; 不跨怪开书等待时间
 global BOOK_SLEEP2 := 600 ; 跨怪开书等待时间
 global BOOK_SLEEP3 := 600 ; 首次开书等待时间
 global MAP_SLEEP := 300 ; 不跨怪Map等待时间
