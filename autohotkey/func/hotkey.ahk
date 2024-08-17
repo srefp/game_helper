@@ -179,9 +179,8 @@ executeStep(step, routeIndex, qmParam) {
     }
 
     if (fastMode && pointFast) {
-        Send "{LShift down}"
+        Send "m"
         Sleep 440
-        Send "{LShift up}"
     } else {
         Send "{F1}"
         if (crusade) {
@@ -226,7 +225,7 @@ executeStep(step, routeIndex, qmParam) {
             op("click", trackMonsterPos, MAP_SLEEP)
             sum += MAP_SLEEP
         } else {
-            op("click", trackMonsterPos, BUTTON_SLEEP)
+            op("click", trackMonsterPos, 5)
             op("click", trackMonsterPos, MAP_SLEEP2)
             sum += MAP_SLEEP2
             prevMonster[1] := row
