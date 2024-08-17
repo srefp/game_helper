@@ -9,9 +9,10 @@ click() {
         keepClicking := false
         return
     }
+
     keepClicking := true
     while keepClicking {
         Send "{Right}"
-        Sleep 1000
+        Sleep 500
     }
 }

@@ -226,6 +226,7 @@ executeStep(step, routeIndex, qmParam) {
             op("click", trackMonsterPos, MAP_SLEEP)
             sum += MAP_SLEEP
         } else {
+            op("click", trackMonsterPos, BUTTON_SLEEP)
             op("click", trackMonsterPos, MAP_SLEEP2)
             sum += MAP_SLEEP2
             prevMonster[1] := row
@@ -285,9 +286,6 @@ executeStep(step, routeIndex, qmParam) {
         Sleep BUTTON_SLEEP
         sum += BUTTON_SLEEP
     }
-
-    Sleep WHEEL_SLEEP
-    sum += WHEEL_SLEEP
 
     if (selectX != 0 && selectY != 0) {
         op("click", [selectX, selectY], SELECT_TWO_CLICK_SLEEP)

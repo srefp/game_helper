@@ -7,7 +7,7 @@ global ENTER_WORLD_DELAY := 11 * 1000 ; 进入世界后的延迟
 global EXIT_WORLD_DELAY := 8 * 1000 ; 退出世界后的延迟
 global CIRCLE := 6606 ; 转一圈的鼠标唯一
 global ONE_DEGREE := CIRCLE / 360 ; 一度是多少
-global NAME := "小灯草" ; 名称
+global NAME := "鸟蛋" ; 名称
 
 ; 每次输入的内容不一样，防止被封
 global textList := [
@@ -59,9 +59,9 @@ while (true) {
 
     }
 
-    ; 注意：【这个地方表示结束，用来调试单个路线！！！】
-    tip("结束", 2000)
-    Sleep 1000 * 1000 * 1000
+;    ; 注意：【这个地方表示结束，用来调试单个路线！！！】
+;    tip("结束", 2000)
+;    Sleep 1000 * 1000 * 1000
     ; 退出世界
     exitWorld()
 }
@@ -123,6 +123,7 @@ act(operation) {
 
 
     if (type = "run") {
+        Sleep OPT_DELAY
         DllCall("mouse_event", "Uint", 0x01, "UInt", operation.turn * ONE_DEGREE, "Uint", 0)
         Sleep OPT_DELAY
 
@@ -146,15 +147,20 @@ act(operation) {
 
 
     } else if (type = "e") {
+        if (HasProp(operation, "delay")) {
+            Sleep operation.delay
+        }
+
         Send "{e Down}"
         Sleep OPT_DELAY
-        DllCall("mouse_event", "Uint", 0x01, "UInt", operation.x * ONE_DEGREE, "Uint", operation.y)
+        DllCall("mouse_event", "Uint", 0x01, "UInt", operation.x * ONE_DEGREE, "Uint", -operation.y * ONE_DEGREE)
         Sleep OPT_DELAY
         Send "{e Up}"
         Sleep OPT_DELAY
 
 
     } else if (type = "walk") {
+        Sleep OPT_DELAY
         DllCall("mouse_event", "Uint", 0x01, "UInt", operation.turn * ONE_DEGREE, "Uint", 0)
         Sleep OPT_DELAY
 
@@ -169,6 +175,7 @@ act(operation) {
 
 
     } else if (type = "click") {
+        Sleep OPT_DELAY
         Send "{Click}"
         Sleep OPT_DELAY
 
