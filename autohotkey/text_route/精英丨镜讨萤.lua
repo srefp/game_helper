@@ -1,4 +1,4 @@
-monster: [5, 1], pos: [35619, 55149], narrow: -1
+monster: [5, 1], pos: [35619, 55149], narrow: -1 -- 加餐
 monster: [3, 3], pos: [47469, 23444], narrow: -1
 monster: [3, 3], pos: [39478, 28668]
 monster: [3, 3], pos: [31077, 62255]

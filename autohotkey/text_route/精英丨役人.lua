@@ -9,4 +9,5 @@ monster: [9, 3], pos: [25852, 1883]
 monster: [10, 1], pos: [46342, 40086], narrow: -2
 monster: [10, 1], pos: [25510, 50776], narrow: -1
 monster: [10, 1], pos: [25510, 50776], narrow: -1
-monster: [10, 1], pos: [28584, 57214]
+monster: [10, 1], pos: [1104, 904]
+monster: [10, 1], pos: [837, 942]
