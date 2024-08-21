@@ -1,4 +1,7 @@
 #Include "./base.ahk" ; 引入函数
+#Include "./route.ahk" ; 引入路线解析
+
+global routes := newRoute("./text_route/" . routeFile)
 
 global waitQmSum := false ; 是否等夜兰Q完
 
@@ -71,7 +74,7 @@ tpNext(qm) {
         routeIndex++
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
-        executeStep routes[routeIndex], routeIndex, qm
+        executeStep routes[routeIndex], qm
     }
     SetTimer () => tpForbidden := false , -5000
 }
@@ -89,13 +92,13 @@ tpPrev() {
         }
     }
     if (routeIndex > 0 && routeIndex <= routes.Length) {
-        executeStep routes[routeIndex], routeIndex, false
+        executeStep routes[routeIndex], false
     }
     SetTimer () => tpForbidden := false , -8000
 }
 
 ; 执行每一步
-executeStep(step, routeIndex, qmParam) {
+executeStep(step, qmParam) {
     global quickPickPause
     global prevMonster
     global crusade

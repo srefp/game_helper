@@ -18,13 +18,13 @@
 ;   2、默认第一个点位需要手动传送过去，如果是自己开地，将routeIndex改为0，从而传送到第一个点位。
 
 #HotIf WinActive("ahk_class UnityWndClass") ; 仅在Unity类游戏生效
-
-#Include "./route/-6.ahk" ; 引入路线文件
+global routeFile := "小怪丨刀车.lua" ; 路线文件名称
 #Include "./func/hotkey.ahk" ; 引入快捷键文件
 
-
-global routeIndex := 1 ; 路线开始的点位 - 1，设置为29可直达传奇，地主设置为0，到别人世界设置为1
+global routeIndex := 0 ; 路线开始的点位 - 1，设置为29可直达传奇，地主设置为0，到别人世界设置为1
 global hintEnabled := false ; 是否开启提示
+
+
 global timingFile := "D:/codeRepo/game_helper/timing/-6.txt" ; 计时文件的绝对路径
 
 
