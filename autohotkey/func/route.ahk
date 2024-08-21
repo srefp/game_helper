@@ -3,7 +3,6 @@
 newRoute(filePath) {
     routeItems := []
     fileContent := FileRead(filePath, "UTF-8")
-;    routeLines := StrSplit(fileContent, "`n")
 
     Loop parse, fileContent, "`n", "`r" {
         line := A_LoopField
@@ -43,9 +42,6 @@ newRoute(filePath) {
                     nums := StrSplit(value, ",")
                     numValues := []
                     for (num in nums) {
-                        if (StrLen(Trim(num)) = 6) {
-
-                        }
                         numValues.push(Trim(num))
                     }
                     realValues.push(numValues)
